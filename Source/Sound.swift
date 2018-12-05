@@ -10,67 +10,96 @@ import AVFoundation
 
 public typealias SoundCompletion = (_ error: Error?) -> Void
 
-public class Sound {
+fileprivate var associatedCompletionKey = "kAssociatedCompletionKey"
 
-    private var player: AVAudioPlayer?
+public class Sound : NSObject {
+
+    var player: AVAudioPlayer?
     
     var name: String?
     var url: URL?
-    var groupKey: String?
+    var groupKey: String = SoundableKey.DefaultGroupKey
     var volume: Float = 1.0
+    var isPlaying: Bool {
+        return player?.isPlaying ?? false
+    }
+    
+    override public var description: String {
+        return "groupKey: \(groupKey)"
+    }
+    
+    deinit {
+        print("deallocating sound")
+    }
     
     
     // MARK: - Initializers
+    override private init() { }
+    
     init(name: String, extension: String, bundle: Bundle = Bundle.main) {
-        self.name = name
+        super.init()
         
+        self.name = name
         if let path =  bundle.path(forResource: name, ofType: `extension`) {
-            url = URL(string: path)
+            url = URL(fileURLWithPath: path)
         }
+        preparePlayer()
     }
     
     init(fileName: String, bundle: Bundle = Bundle.main) {
-        name = fileName
+        super.init()
         
-        let split = fileName.split(separator: ".")
-        if split.count >= 2 {
-            if let file = split.first, let fileExtension = split.last {
-                if let path =  bundle.path(forResource: String(file), ofType: String(fileExtension)) {
-                    url = URL(string: path)
-                }
-            }
+        let urlName = URL(fileURLWithPath: fileName)
+        let file = urlName.deletingPathExtension().lastPathComponent
+        let fileExtension = urlName.pathExtension
+        
+        name = file
+        if let path =  bundle.path(forResource: file, ofType: fileExtension) {
+            url = URL(fileURLWithPath: path)
         }
-        
+        preparePlayer()
     }
     
     init(url: URL) {
+        super.init()
+        
         self.name = url.lastPathComponent
         self.url = url
         
+        preparePlayer()
     }
     
     
     // MARK: - Helpers
-    fileprivate func createPlayer() {
+    fileprivate func preparePlayer() {
         do {
-            player = try AVAudioPlayer(contentsOf: url!)
-            player?.prepareToPlay()
-            player?.volume = volume
+            if let url = url {
+                player = try AVAudioPlayer(contentsOf: url)
+                player?.prepareToPlay()
+                player?.volume = volume
+                player?.delegate = self
+            } else {
+                print("missing url")
+            }
         }
         catch let error {
             print("error creating AVAudioPlayer: \(error)")
         }
-        
     }
     
     
     // MARK: - Handling sound
-    public func play(groupKey: String = SoundableKey.DefaultGroupKey, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
-        self.groupKey = groupKey
+    public func play(groupKey: String? = nil, loopsCount: Int = 0, completion: SoundCompletion? = nil){
+        self.groupKey = groupKey ?? SoundableKey.DefaultGroupKey
+        
+        if let completion = completion {
+            objc_setAssociatedObject(self, &associatedCompletionKey, completion, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+        }
         
         player?.numberOfLoops = loopsCount
+        player?.play()
         
-        
+        Soundable.play(self, completion: completion)
     }
     
     public func pause() {
@@ -84,8 +113,31 @@ public class Sound {
 }
 
 
+extension Sound : AVAudioPlayerDelegate {
+    public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        let completion = objc_getAssociatedObject(self, &associatedCompletionKey) as? SoundCompletion
+        completion?(nil)
+        
+        objc_removeAssociatedObjects(self)
+        player.delegate = nil
+        
+        Soundable.stop(self)
+    }
+    
+    public func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        let completion = objc_getAssociatedObject(self, &associatedCompletionKey) as? SoundCompletion
+        completion?(error)
+        
+        objc_removeAssociatedObjects(self)
+        player.delegate = nil
+        
+        Soundable.stop(self)
+    }
+}
+
+
 extension String {
-    func tryToPlay(_ completion: SoundCompletion? = nil) {
+    public func tryToPlay(_ completion: SoundCompletion? = nil) {
         guard let url = URL(string: self) else {
             completion?(SBError.playingFailed(reason: .wrongUrl))
             return
@@ -100,7 +152,7 @@ extension String {
 
 
 extension URL {
-    func tryToPlay(_ completion: SoundCompletion? = nil) {
+    public func tryToPlay(_ completion: SoundCompletion? = nil) {
         let sound = Sound(url: self)
         sound.play { error in
             completion?(error)

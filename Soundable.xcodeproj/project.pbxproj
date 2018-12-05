@@ -16,6 +16,11 @@
 		AA8ADFD021B6697E0052CE0D /* Soundable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8ADFCF21B6697E0052CE0D /* Soundable.swift */; };
 		AA8ADFD221B669990052CE0D /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8ADFD121B669990052CE0D /* Sound.swift */; };
 		AA8ADFD421B672E70052CE0D /* SBError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8ADFD321B672E70052CE0D /* SBError.swift */; };
+		AAA259AD21B7D6FB00E07F5A /* guitar-chord.wav in Resources */ = {isa = PBXBuildFile; fileRef = AAA259AA21B7D6FB00E07F5A /* guitar-chord.wav */; };
+		AAA259AE21B7D6FB00E07F5A /* guitar-songs.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AAA259AB21B7D6FB00E07F5A /* guitar-songs.mp3 */; };
+		AAA259AF21B7D6FB00E07F5A /* nature.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AAA259AC21B7D6FB00E07F5A /* nature.mp3 */; };
+		AAA259B121B7F33700E07F5A /* nature-2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AAA259B021B7F33700E07F5A /* nature-2.mp3 */; };
+		AAA259B321B81C7E00E07F5A /* SoundsGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA259B221B81C7E00E07F5A /* SoundsGroup.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +47,11 @@
 		AA8ADFCF21B6697E0052CE0D /* Soundable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Soundable.swift; sourceTree = "<group>"; };
 		AA8ADFD121B669990052CE0D /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
 		AA8ADFD321B672E70052CE0D /* SBError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBError.swift; sourceTree = "<group>"; };
+		AAA259AA21B7D6FB00E07F5A /* guitar-chord.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "guitar-chord.wav"; sourceTree = "<group>"; };
+		AAA259AB21B7D6FB00E07F5A /* guitar-songs.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "guitar-songs.mp3"; sourceTree = "<group>"; };
+		AAA259AC21B7D6FB00E07F5A /* nature.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = nature.mp3; sourceTree = "<group>"; };
+		AAA259B021B7F33700E07F5A /* nature-2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "nature-2.mp3"; sourceTree = "<group>"; };
+		AAA259B221B81C7E00E07F5A /* SoundsGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundsGroup.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +114,7 @@
 		AA8ADFCC21B6674D0052CE0D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AAA259A921B7D6A700E07F5A /* Sounds */,
 				AA8ADFB321B667210052CE0D /* Assets.xcassets */,
 				AA8ADFB521B667210052CE0D /* LaunchScreen.storyboard */,
 				AA8ADFB021B6671F0052CE0D /* Main.storyboard */,
@@ -123,11 +134,23 @@
 			isa = PBXGroup;
 			children = (
 				AA8ADFCF21B6697E0052CE0D /* Soundable.swift */,
+				AAA259B221B81C7E00E07F5A /* SoundsGroup.swift */,
 				AA8ADFD121B669990052CE0D /* Sound.swift */,
 				AA8ADFD321B672E70052CE0D /* SBError.swift */,
 			);
 			name = Source;
 			path = ../Source;
+			sourceTree = "<group>";
+		};
+		AAA259A921B7D6A700E07F5A /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				AAA259AA21B7D6FB00E07F5A /* guitar-chord.wav */,
+				AAA259AB21B7D6FB00E07F5A /* guitar-songs.mp3 */,
+				AAA259AC21B7D6FB00E07F5A /* nature.mp3 */,
+				AAA259B021B7F33700E07F5A /* nature-2.mp3 */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,7 +235,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA8ADFB721B667210052CE0D /* LaunchScreen.storyboard in Resources */,
+				AAA259AF21B7D6FB00E07F5A /* nature.mp3 in Resources */,
+				AAA259AD21B7D6FB00E07F5A /* guitar-chord.wav in Resources */,
 				AA8ADFB421B667210052CE0D /* Assets.xcassets in Resources */,
+				AAA259AE21B7D6FB00E07F5A /* guitar-songs.mp3 in Resources */,
+				AAA259B121B7F33700E07F5A /* nature-2.mp3 in Resources */,
 				AA8ADFB221B6671F0052CE0D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA8ADFD021B6697E0052CE0D /* Soundable.swift in Sources */,
+				AAA259B321B81C7E00E07F5A /* SoundsGroup.swift in Sources */,
 				AA8ADFAF21B6671F0052CE0D /* ViewController.swift in Sources */,
 				AA8ADFD421B672E70052CE0D /* SBError.swift in Sources */,
 				AA8ADFAD21B6671F0052CE0D /* AppDelegate.swift in Sources */,

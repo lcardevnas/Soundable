@@ -9,52 +9,97 @@
 import AVFoundation
 
 public struct SoundableKey {
-    public static let SoundsEnabled = "kSoundableSoundsEnabled"
-    public static let DefaultGroupKey = "kSoundableDefaultGroupKey"
+    public static let SoundsEnabled     = "kSoundableSoundsEnabled"
+    public static let DefaultGroupKey   = "kSoundableDefaultGroupKey"
 }
 
 public class Soundable {
     
-    private var playingSounds: [Sound] = []
+    private static var playingSounds: [String: Sound] = [:]
+    private static var soundGroups: [SoundsGroup] = []
     
-    public static var enabled: Bool {
-        get { return UserDefaults.standard.bool(forKey: SoundableKey.SoundsEnabled) }
-        set {
-            UserDefaults.standard.set(enabled, forKey: SoundableKey.SoundsEnabled)
-            stopAll()
+    public static var soundEnabled: Bool = {
+        return UserDefaults.standard.bool(forKey: SoundableKey.SoundsEnabled)
+        }() { didSet {
+            UserDefaults.standard.set(!soundEnabled, forKey: SoundableKey.SoundsEnabled)
+            if !soundEnabled {
+                stopAll()
+            }
         }
     }
     
     
     // MARK: - Playing
-    public class func play(name: String, extension: String, groupKey: String = SoundableKey.DefaultGroupKey, loopsCount: Int = 0) {
-        let sound = Sound(name: name, extension: `extension`)
+    public class func play(sounds: [Sound], completion: SoundCompletion? = nil) {
+        let soundGroup = SoundsGroup(sounds: sounds)
+        soundGroups.append(soundGroup)
         
+        soundGroup.play { error in
+            completion?(error)
+        }
     }
     
-    public class func play(fileName: String, groupKey: String = SoundableKey.DefaultGroupKey, loopsCount: Int = 0) {
+    public class func play(name: String, extension: String, groupKey: String = SoundableKey.DefaultGroupKey, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
+        let sound = Sound(name: name, extension: `extension`)
+        sound.groupKey = groupKey
+        sound.player?.numberOfLoops = loopsCount
+        play(sound, completion: completion)
+    }
+    
+    public class func play(fileName: String, groupKey: String = SoundableKey.DefaultGroupKey, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
+        let sound = Sound(fileName: fileName)
+        sound.groupKey = groupKey
+        sound.player?.numberOfLoops = loopsCount
+        play(sound, completion: completion)
+    }
+    
+    public class func play(_ sound: Sound, completion: SoundCompletion? = nil) {
+        if let urlString = sound.url?.absoluteString {
+            playingSounds[urlString] = sound
+        }
         
+        print("playing sounds: \(playingSounds)")
+        
+        if !sound.isPlaying {
+            sound.play { error in
+                remove(sound)
+                completion?(error)
+            }
+        }
     }
     
     
     // MARK: - Handling sounds
-    public class func addToQueue(_ sound: Sound) {
-        
+    public class func stop(_ sound: Sound) {
+        if sound.isPlaying {
+            sound.stop()
+        }
+        remove(sound)
     }
     
-    public class func stopAll() {
-        
+    public class func stopAll(for groupKey: String? = nil) {
+        for (_, sound) in playingSounds {
+            if let groupKey = groupKey, sound.groupKey != groupKey {
+                continue
+            }
+            stop(sound)
+        }
     }
     
+    
+    // MARK: - Private
+    private class func remove(_ sound: Sound) {
+        if let urlString = sound.url?.absoluteString {
+            playingSounds.removeValue(forKey: urlString)
+        }
+        print("playing sounds: \(playingSounds)")
+    }
     
 }
 
 
-extension Sequence where Iterator.Element == Sound
-{
-    func play() {
-        for sound in self {
-            print("sound: \(sound.name ?? "")")
-        }
+extension Sequence where Iterator.Element == Sound {
+    func play(_ completion: SoundCompletion? = nil) {
+        Soundable.play(sounds: self as! [Sound], completion: completion)
     }
 }
