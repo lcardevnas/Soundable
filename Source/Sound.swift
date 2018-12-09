@@ -12,13 +12,13 @@ public typealias SoundCompletion = (_ error: Error?) -> Void
 
 fileprivate var associatedCompletionKey = "kAssociatedCompletionKey"
 
-public class Sound : NSObject {
+public class Sound : NSObject, Playable {
 
     var player: AVAudioPlayer?
     
+    public var groupKey: String = SoundableKey.DefaultGroupKey
     var name: String?
     var url: URL?
-    var groupKey: String = SoundableKey.DefaultGroupKey
     var volume: Float = 1.0
     var isPlaying: Bool {
         return player?.isPlaying ?? false
@@ -87,9 +87,12 @@ public class Sound : NSObject {
         }
     }
     
-    
-    // MARK: - Handling sound
-    public func play(groupKey: String? = nil, loopsCount: Int = 0, completion: SoundCompletion? = nil){
+}
+
+
+// MARK: - Playable
+extension Sound {
+    public func play(groupKey: String? = nil, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
         self.groupKey = groupKey ?? SoundableKey.DefaultGroupKey
         
         if let completion = completion {
@@ -107,9 +110,8 @@ public class Sound : NSObject {
     }
     
     public func stop() {
-        player?.stop()
+        Soundable.stop(self)
     }
-    
 }
 
 
@@ -138,10 +140,7 @@ extension Sound : AVAudioPlayerDelegate {
 
 extension String {
     public func tryToPlay(_ completion: SoundCompletion? = nil) {
-        guard let url = URL(string: self) else {
-            completion?(SBError.playingFailed(reason: .wrongUrl))
-            return
-        }
+        let url = URL(fileURLWithPath: self)
         
         let sound = Sound(url: url)
         sound.play { error in

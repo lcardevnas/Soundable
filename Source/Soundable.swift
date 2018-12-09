@@ -9,19 +9,19 @@
 import AVFoundation
 
 public struct SoundableKey {
-    public static let SoundsEnabled     = "kSoundableSoundsEnabled"
+    public static let SoundEnabled      = "kSoundableSoundEnabled"
     public static let DefaultGroupKey   = "kSoundableDefaultGroupKey"
 }
 
 public class Soundable {
     
     private static var playingSounds: [String: Sound] = [:]
-    private static var soundGroups: [SoundsGroup] = []
+    private static var playingQueues: [String: SoundsQueue] = [:]
     
     public static var soundEnabled: Bool = {
-        return UserDefaults.standard.bool(forKey: SoundableKey.SoundsEnabled)
+        return UserDefaults.standard.bool(forKey: SoundableKey.SoundEnabled)
         }() { didSet {
-            UserDefaults.standard.set(!soundEnabled, forKey: SoundableKey.SoundsEnabled)
+            UserDefaults.standard.set(!soundEnabled, forKey: SoundableKey.SoundEnabled)
             if !soundEnabled {
                 stopAll()
             }
@@ -29,16 +29,7 @@ public class Soundable {
     }
     
     
-    // MARK: - Playing
-    public class func play(sounds: [Sound], completion: SoundCompletion? = nil) {
-        let soundGroup = SoundsGroup(sounds: sounds)
-        soundGroups.append(soundGroup)
-        
-        soundGroup.play { error in
-            completion?(error)
-        }
-    }
-    
+    // MARK: - Playing sounds
     public class func play(name: String, extension: String, groupKey: String = SoundableKey.DefaultGroupKey, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
         let sound = Sound(name: name, extension: `extension`)
         sound.groupKey = groupKey
@@ -69,12 +60,34 @@ public class Soundable {
     }
     
     
-    // MARK: - Handling sounds
+    // MARK: - Playing sounds queues
+    public class func play(sounds: [Sound], completion: SoundCompletion? = nil) {
+        let soundsQueue = SoundsQueue(sounds: sounds)
+        playQueue(soundsQueue, completion: completion)
+    }
+    
+    public class func playQueue(_ soundsQueue: SoundsQueue, completion: SoundCompletion? = nil) {
+        playingQueues[soundsQueue.identifier] = soundsQueue
+        
+        print("playing queues: \(playingQueues)")
+        
+        soundsQueue.play { error in
+            completion?(error)
+        }
+    }
+    
+    
+    // MARK: - Stop sounds
     public class func stop(_ sound: Sound) {
         if sound.isPlaying {
-            sound.stop()
+            sound.player?.stop()
         }
         remove(sound)
+    }
+    
+    public class func stopQueue(_ soundsQueue: SoundsQueue) {
+        soundsQueue.queuePlayer?.removeAllItems()
+        removeQueue(soundsQueue)
     }
     
     public class func stopAll(for groupKey: String? = nil) {
@@ -83,6 +96,13 @@ public class Soundable {
                 continue
             }
             stop(sound)
+        }
+        
+        for (_, queue) in playingQueues {
+            if let groupKey = groupKey, queue.groupKey != groupKey {
+                continue
+            }
+            stopQueue(queue)
         }
     }
     
@@ -93,6 +113,12 @@ public class Soundable {
             playingSounds.removeValue(forKey: urlString)
         }
         print("playing sounds: \(playingSounds)")
+    }
+    
+    private class func removeQueue(_ soundsQueue: SoundsQueue) {
+        playingQueues.removeValue(forKey: soundsQueue.identifier)
+        
+        print("playing queues: \(playingQueues)")
     }
     
 }

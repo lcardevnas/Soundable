@@ -29,8 +29,9 @@ class ViewController: UIViewController {
 
 
     @IBAction func playSound(_ sender: UIButton) {
-        let sound1 = Sound(fileName: "nature-2.mp3")
-        let sound2 = Sound(fileName: "nature.mp3")
+        
+        let sound1 = Sound(fileName: "nature.mp3")
+        let sound2 = Sound(fileName: "rain-thunder.ogg")
         let sound3 = Sound(fileName: "guitar-chord.wav")
         
         let sounds = [sound1, sound2, sound3]
