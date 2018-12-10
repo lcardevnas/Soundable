@@ -136,7 +136,7 @@ public class Soundable {
 
 
 extension Sequence where Iterator.Element == Sound {
-    func play(groupKey: String = SoundableKey.DefaultGroupKey, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
+    public func play(groupKey: String = SoundableKey.DefaultGroupKey, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
         let sounds = self as! [Sound]
         if sounds.count == 0 {
             completion?(SBError.playingFailed(reason: .noSoundsToPlay))

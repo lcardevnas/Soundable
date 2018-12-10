@@ -81,13 +81,13 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="guitar-chord.wav" borderStyle="roundedRect" placeholder="Write the name as in bundle" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EW0-Tx-ji5">
-                                <rect key="frame" x="32" y="135" width="262.5" height="30"/>
+                                <rect key="frame" x="32" y="168.5" width="262.5" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k27-VU-qu3">
-                                <rect key="frame" x="304.5" y="135" width="38.5" height="30"/>
+                                <rect key="frame" x="304.5" y="168.5" width="38.5" height="30"/>
                                 <state key="normal" title="Play"/>
                                 <connections>
                                     <action selector="playSound:" destination="BYZ-38-t0r" eventType="touchUpInside" id="o0V-pF-DdI"/>
@@ -95,7 +95,9 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ar8-R3-3jh">
                                 <rect key="frame" x="141" y="78" width="93" height="30"/>
-                                <state key="normal" title="Disable audio"/>
+                                <state key="normal" title="Disable audio">
+                                    <color key="titleColor" red="0.93333333330000001" green="0.1960784314" blue="0.14117647059999999" alpha="1" colorSpace="deviceRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="disableAudio:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NND-Ez-Ywz"/>
                                 </connections>
@@ -107,7 +109,7 @@
                             <constraint firstItem="fj5-5a-7z4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="AQb-BN-SVm"/>
                             <constraint firstItem="fXu-dF-Pgl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Ecw-ut-JUa"/>
                             <constraint firstItem="fXu-dF-Pgl" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="PZq-hK-WxA"/>
-                            <constraint firstItem="EW0-Tx-ji5" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.45" id="Ty1-Oa-vrm"/>
+                            <constraint firstItem="EW0-Tx-ji5" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.55" id="Ty1-Oa-vrm"/>
                             <constraint firstItem="ar8-R3-3jh" firstAttribute="centerX" secondItem="fkh-2W-gQP" secondAttribute="centerX" id="UwA-5f-sCL"/>
                             <constraint firstItem="fkh-2W-gQP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="VKf-1T-1HA"/>
                             <constraint firstItem="k27-VU-qu3" firstAttribute="centerY" secondItem="EW0-Tx-ji5" secondAttribute="centerY" id="eXS-DE-uUU"/>

@@ -68,7 +68,7 @@ class ViewController: UIViewController {
         
         selectedSounds.play { error in
             if let error = error {
-                print("error: \(error)")
+                print("error: \(error.localizedDescription)")
             }
             self.tableView?.isUserInteractionEnabled = true
         }
@@ -87,7 +87,7 @@ class ViewController: UIViewController {
         
         soundName.tryToPlay { error in
             if let error = error {
-                print("error: \(error)")
+                print("error: \(error.localizedDescription)")
             }
         }
     }
@@ -107,7 +107,7 @@ class ViewController: UIViewController {
     fileprivate func play(_ sound: Sound) {
         sound.play { error in
             if let error = error {
-                print("error: \(error)")
+                print("error: \(error.localizedDescription)")
             }
             print("finished playing: \(sound.name ?? "")")
         }
