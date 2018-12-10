@@ -9,7 +9,10 @@
 import Foundation
 
 public protocol Playable {
+    var url: URL? { get set }
+    var identifier: String { get set }
     var groupKey: String { get set }
+    var loopsCount: Int { get set }
     
     func play(groupKey: String?, loopsCount: Int, completion: SoundCompletion?)
     func pause()

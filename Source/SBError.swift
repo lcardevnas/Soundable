@@ -13,6 +13,8 @@ public enum SBError: Error {
     
     public enum PlayingFailureReason {
         case wrongUrl
+        case noSoundsToPlay
+        case audioDisabled
     }
 }
 
@@ -31,7 +33,11 @@ extension SBError.PlayingFailureReason {
     var localizedDescription: String {
         switch self {
         case .wrongUrl:
-            return NSLocalizedString("wrong_url", comment: "Player cannot play a sound at this url")
+            return NSLocalizedString("wrong_url", comment: "Player cannot play a sound with this url")
+        case .noSoundsToPlay:
+            return NSLocalizedString("no_sounds_to_play", comment: "The array does not contain any sound to play")
+        case .audioDisabled:
+            return NSLocalizedString("audio_disabled", comment: "The audio is disabled in Soundable. Set `Soundable.soundEnabled = true`")
         }
     }
 }

@@ -18,42 +18,119 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="fXu-dF-Pgl">
+                                <rect key="frame" x="0.0" y="333.5" width="375" height="333.5"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SoundCell" id="5YH-fG-L1E" customClass="SoundCell" customModule="Soundable" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5YH-fG-L1E" id="yfa-4z-XGl">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ip5-Eb-6DB">
+                                                    <rect key="frame" x="330" y="7" width="30" height="30"/>
+                                                    <state key="normal" title="Play"/>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="niD-eH-xUH">
+                                                    <rect key="frame" x="18" y="11.5" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OBb-hB-tJP">
+                                                    <rect key="frame" x="273" y="7" width="42" height="30"/>
+                                                    <state key="normal" title="Pause"/>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="niD-eH-xUH" firstAttribute="leading" secondItem="yfa-4z-XGl" secondAttribute="leading" constant="18" id="8ru-Jy-C0U"/>
+                                                <constraint firstItem="OBb-hB-tJP" firstAttribute="centerY" secondItem="yfa-4z-XGl" secondAttribute="centerY" id="Nrr-pr-qt0"/>
+                                                <constraint firstItem="OBb-hB-tJP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="niD-eH-xUH" secondAttribute="trailing" constant="15" id="Tyc-Xk-iPl"/>
+                                                <constraint firstItem="niD-eH-xUH" firstAttribute="centerY" secondItem="yfa-4z-XGl" secondAttribute="centerY" id="UOn-zt-nG2"/>
+                                                <constraint firstItem="Ip5-Eb-6DB" firstAttribute="leading" secondItem="OBb-hB-tJP" secondAttribute="trailing" constant="15" id="dTi-jC-jic"/>
+                                                <constraint firstAttribute="trailing" secondItem="Ip5-Eb-6DB" secondAttribute="trailing" constant="15" id="hSU-qF-6Ho"/>
+                                                <constraint firstItem="Ip5-Eb-6DB" firstAttribute="centerY" secondItem="yfa-4z-XGl" secondAttribute="centerY" id="u4p-9z-7T6"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="pauseButton" destination="OBb-hB-tJP" id="5sP-GH-cgl"/>
+                                            <outlet property="playButton" destination="Ip5-Eb-6DB" id="NSU-dL-6k6"/>
+                                            <outlet property="titleLabel" destination="niD-eH-xUH" id="Ocf-Fg-Ena"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="LkO-HU-qzW"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="xbW-BH-V7e"/>
+                                </connections>
+                            </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fj5-5a-7z4">
-                                <rect key="frame" x="150" y="152" width="75" height="30"/>
-                                <state key="normal" title="Play sound"/>
+                                <rect key="frame" x="71.5" y="273.5" width="232" height="30"/>
+                                <state key="normal" title="Play selected sounds in sequence"/>
                                 <connections>
-                                    <action selector="playSound:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bA3-su-LxN"/>
+                                    <action selector="playSounds:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PGl-T2-I7c"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Md3-A8-TdE">
-                                <rect key="frame" x="129.5" y="418.5" width="116" height="30"/>
-                                <state key="normal" title="Stop main sound"/>
-                                <connections>
-                                    <action selector="stopSound1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DXN-oo-f1K"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1k5-f7-odD">
-                                <rect key="frame" x="135" y="518.5" width="105" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fkh-2W-gQP">
+                                <rect key="frame" x="135" y="40" width="105" height="30"/>
                                 <state key="normal" title="Stop all sounds"/>
                                 <connections>
-                                    <action selector="stopAllSounds:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qWO-8T-H0r"/>
+                                    <action selector="stopAllSounds:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RUL-8C-beT"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="guitar-chord.wav" borderStyle="roundedRect" placeholder="Write the name as in bundle" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EW0-Tx-ji5">
+                                <rect key="frame" x="32" y="135" width="262.5" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k27-VU-qu3">
+                                <rect key="frame" x="304.5" y="135" width="38.5" height="30"/>
+                                <state key="normal" title="Play"/>
+                                <connections>
+                                    <action selector="playSound:" destination="BYZ-38-t0r" eventType="touchUpInside" id="o0V-pF-DdI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ar8-R3-3jh">
+                                <rect key="frame" x="141" y="78" width="93" height="30"/>
+                                <state key="normal" title="Disable audio"/>
+                                <connections>
+                                    <action selector="disableAudio:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NND-Ez-Ywz"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="ar8-R3-3jh" firstAttribute="top" secondItem="fkh-2W-gQP" secondAttribute="bottom" constant="8" id="3Xd-PR-k9G"/>
                             <constraint firstItem="fj5-5a-7z4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="AQb-BN-SVm"/>
-                            <constraint firstItem="Md3-A8-TdE" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="1.3" id="Bb8-e7-Xxm"/>
-                            <constraint firstItem="fj5-5a-7z4" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.5" id="Ss0-cw-k8C"/>
-                            <constraint firstItem="Md3-A8-TdE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Wlf-Pj-fZH"/>
-                            <constraint firstItem="1k5-f7-odD" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="1.6" id="ihV-ER-47f"/>
-                            <constraint firstItem="1k5-f7-odD" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rg6-1x-DMS"/>
+                            <constraint firstItem="fXu-dF-Pgl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Ecw-ut-JUa"/>
+                            <constraint firstItem="fXu-dF-Pgl" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="PZq-hK-WxA"/>
+                            <constraint firstItem="EW0-Tx-ji5" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.45" id="Ty1-Oa-vrm"/>
+                            <constraint firstItem="ar8-R3-3jh" firstAttribute="centerX" secondItem="fkh-2W-gQP" secondAttribute="centerX" id="UwA-5f-sCL"/>
+                            <constraint firstItem="fkh-2W-gQP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="VKf-1T-1HA"/>
+                            <constraint firstItem="k27-VU-qu3" firstAttribute="centerY" secondItem="EW0-Tx-ji5" secondAttribute="centerY" id="eXS-DE-uUU"/>
+                            <constraint firstItem="fXu-dF-Pgl" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.5" id="fZY-7R-TOr"/>
+                            <constraint firstItem="EW0-Tx-ji5" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.7" id="iJM-co-Wsr"/>
+                            <constraint firstItem="EW0-Tx-ji5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="izV-NG-KSQ"/>
+                            <constraint firstItem="fXu-dF-Pgl" firstAttribute="top" secondItem="fj5-5a-7z4" secondAttribute="bottom" constant="30" id="lUt-2r-Kd4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="k27-VU-qu3" secondAttribute="trailing" constant="32" id="r7T-gT-g6o"/>
+                            <constraint firstItem="fXu-dF-Pgl" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="td1-dF-VxK"/>
+                            <constraint firstItem="k27-VU-qu3" firstAttribute="leading" secondItem="EW0-Tx-ji5" secondAttribute="trailing" constant="10" id="tdR-Ia-Cwh"/>
+                            <constraint firstItem="fkh-2W-gQP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="voV-fK-J0H"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="enableSoundButton" destination="ar8-R3-3jh" id="mgR-IG-m8m"/>
+                        <outlet property="soundNameField" destination="EW0-Tx-ji5" id="RXS-4n-ceW"/>
+                        <outlet property="tableView" destination="fXu-dF-Pgl" id="rpB-dK-oDn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
     </scenes>
 </document>

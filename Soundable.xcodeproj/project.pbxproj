@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA07044D21BE957F00A4B213 /* rain.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AA07044C21BE957F00A4B213 /* rain.mp3 */; };
 		AA8ADFAD21B6671F0052CE0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8ADFAC21B6671F0052CE0D /* AppDelegate.swift */; };
 		AA8ADFAF21B6671F0052CE0D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8ADFAE21B6671F0052CE0D /* ViewController.swift */; };
 		AA8ADFB221B6671F0052CE0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA8ADFB021B6671F0052CE0D /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 		AAA259AE21B7D6FB00E07F5A /* guitar-songs.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AAA259AB21B7D6FB00E07F5A /* guitar-songs.mp3 */; };
 		AAA259AF21B7D6FB00E07F5A /* nature.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AAA259AC21B7D6FB00E07F5A /* nature.mp3 */; };
 		AAA259B321B81C7E00E07F5A /* SoundsQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA259B221B81C7E00E07F5A /* SoundsQueue.swift */; };
+		AAB29E3A21BE8DF70046D2DA /* SoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB29E3921BE8DF70046D2DA /* SoundCell.swift */; };
 		E91FB40021BD69950048456E /* Playable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91FB3FF21BD69950048456E /* Playable.swift */; };
 		E91FB40521BDD8910048456E /* water-stream.wav in Resources */ = {isa = PBXBuildFile; fileRef = E91FB40321BDD8910048456E /* water-stream.wav */; };
 		E91FB40621BDD8910048456E /* rain-thunder.ogg in Resources */ = {isa = PBXBuildFile; fileRef = E91FB40421BDD8910048456E /* rain-thunder.ogg */; };
@@ -36,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AA07044C21BE957F00A4B213 /* rain.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = rain.mp3; sourceTree = "<group>"; };
 		AA8ADFA921B6671F0052CE0D /* Soundable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Soundable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA8ADFAC21B6671F0052CE0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA8ADFAE21B6671F0052CE0D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -53,6 +56,7 @@
 		AAA259AB21B7D6FB00E07F5A /* guitar-songs.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "guitar-songs.mp3"; sourceTree = "<group>"; };
 		AAA259AC21B7D6FB00E07F5A /* nature.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = nature.mp3; sourceTree = "<group>"; };
 		AAA259B221B81C7E00E07F5A /* SoundsQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundsQueue.swift; sourceTree = "<group>"; };
+		AAB29E3921BE8DF70046D2DA /* SoundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundCell.swift; sourceTree = "<group>"; };
 		E91FB3FF21BD69950048456E /* Playable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playable.swift; sourceTree = "<group>"; };
 		E91FB40321BDD8910048456E /* water-stream.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "water-stream.wav"; sourceTree = "<group>"; };
 		E91FB40421BDD8910048456E /* rain-thunder.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "rain-thunder.ogg"; sourceTree = "<group>"; };
@@ -99,6 +103,7 @@
 			children = (
 				AA8ADFAC21B6671F0052CE0D /* AppDelegate.swift */,
 				AA8ADFAE21B6671F0052CE0D /* ViewController.swift */,
+				AAB29E3921BE8DF70046D2DA /* SoundCell.swift */,
 				AA8ADFCE21B667870052CE0D /* Source */,
 				AA8ADFCC21B6674D0052CE0D /* Resources */,
 				AA8ADFCD21B667680052CE0D /* Supporting files */,
@@ -154,6 +159,7 @@
 				AAA259AB21B7D6FB00E07F5A /* guitar-songs.mp3 */,
 				AAA259AC21B7D6FB00E07F5A /* nature.mp3 */,
 				E91FB40421BDD8910048456E /* rain-thunder.ogg */,
+				AA07044C21BE957F00A4B213 /* rain.mp3 */,
 				E91FB40321BDD8910048456E /* water-stream.wav */,
 			);
 			path = Sounds;
@@ -242,6 +248,7 @@
 			files = (
 				E91FB40521BDD8910048456E /* water-stream.wav in Resources */,
 				AA8ADFB721B667210052CE0D /* LaunchScreen.storyboard in Resources */,
+				AA07044D21BE957F00A4B213 /* rain.mp3 in Resources */,
 				AAA259AF21B7D6FB00E07F5A /* nature.mp3 in Resources */,
 				E91FB40621BDD8910048456E /* rain-thunder.ogg in Resources */,
 				AAA259AD21B7D6FB00E07F5A /* guitar-chord.wav in Resources */,
@@ -268,6 +275,7 @@
 				AA8ADFD021B6697E0052CE0D /* Soundable.swift in Sources */,
 				AAA259B321B81C7E00E07F5A /* SoundsQueue.swift in Sources */,
 				AA8ADFAF21B6671F0052CE0D /* ViewController.swift in Sources */,
+				AAB29E3A21BE8DF70046D2DA /* SoundCell.swift in Sources */,
 				AA8ADFD421B672E70052CE0D /* SBError.swift in Sources */,
 				AA8ADFAD21B6671F0052CE0D /* AppDelegate.swift in Sources */,
 				AA8ADFD221B669990052CE0D /* Sound.swift in Sources */,

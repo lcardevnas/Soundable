@@ -8,6 +8,8 @@
 
 import AVFoundation
 
+public typealias SoundCompletion = (_ error: Error?) -> Void
+
 public struct SoundableKey {
     public static let SoundEnabled      = "kSoundableSoundEnabled"
     public static let DefaultGroupKey   = "kSoundableDefaultGroupKey"
@@ -15,13 +17,15 @@ public struct SoundableKey {
 
 public class Soundable {
     
-    private static var playingSounds: [String: Sound] = [:]
-    private static var playingQueues: [String: SoundsQueue] = [:]
+    private static var playingSounds: [String: Playable] = [:]
     
     public static var soundEnabled: Bool = {
-        return UserDefaults.standard.bool(forKey: SoundableKey.SoundEnabled)
+        guard let value = UserDefaults.standard.string(forKey: SoundableKey.SoundEnabled) else {
+            return true
+        }
+        return value == "true"
         }() { didSet {
-            UserDefaults.standard.set(!soundEnabled, forKey: SoundableKey.SoundEnabled)
+            UserDefaults.standard.set(!soundEnabled ? "true" : "false", forKey: SoundableKey.SoundEnabled)
             if !soundEnabled {
                 stopAll()
             }
@@ -30,102 +34,103 @@ public class Soundable {
     
     
     // MARK: - Playing sounds
-    public class func play(name: String, extension: String, groupKey: String = SoundableKey.DefaultGroupKey, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
-        let sound = Sound(name: name, extension: `extension`)
-        sound.groupKey = groupKey
-        sound.player?.numberOfLoops = loopsCount
-        play(sound, completion: completion)
-    }
-    
     public class func play(fileName: String, groupKey: String = SoundableKey.DefaultGroupKey, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
         let sound = Sound(fileName: fileName)
         sound.groupKey = groupKey
-        sound.player?.numberOfLoops = loopsCount
+        sound.loopsCount = loopsCount
         play(sound, completion: completion)
     }
     
     public class func play(_ sound: Sound, completion: SoundCompletion? = nil) {
-        if let urlString = sound.url?.absoluteString {
-            playingSounds[urlString] = sound
-        }
-        
-        print("playing sounds: \(playingSounds)")
-        
-        if !sound.isPlaying {
-            sound.play { error in
-                remove(sound)
-                completion?(error)
-            }
-        }
+        playItem(sound, completion: completion)
     }
     
     
     // MARK: - Playing sounds queues
-    public class func play(sounds: [Sound], completion: SoundCompletion? = nil) {
+    public class func play(sounds: [Sound], groupKey: String = SoundableKey.DefaultGroupKey, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
         let soundsQueue = SoundsQueue(sounds: sounds)
+        soundsQueue.groupKey = groupKey
+        soundsQueue.loopsCount = loopsCount
         playQueue(soundsQueue, completion: completion)
     }
     
     public class func playQueue(_ soundsQueue: SoundsQueue, completion: SoundCompletion? = nil) {
-        playingQueues[soundsQueue.identifier] = soundsQueue
-        
-        print("playing queues: \(playingQueues)")
-        
-        soundsQueue.play { error in
-            completion?(error)
-        }
+        playItem(soundsQueue, completion: completion)
     }
     
     
     // MARK: - Stop sounds
     public class func stop(_ sound: Sound) {
-        if sound.isPlaying {
-            sound.player?.stop()
-        }
-        remove(sound)
+        sound.stop()
     }
     
     public class func stopQueue(_ soundsQueue: SoundsQueue) {
-        soundsQueue.queuePlayer?.removeAllItems()
-        removeQueue(soundsQueue)
+        soundsQueue.stop()
+    }
+    
+    public class func stopItem(_ playableItem: Playable) {
+        playableItem.stop()
+    }
+    
+    public class func stopSound(with identifier: String? = nil) {
+        for (_, playableItem) in playingSounds {
+            if playableItem.identifier == identifier {
+                stopItem(playableItem)
+                return
+            }
+        }
     }
     
     public class func stopAll(for groupKey: String? = nil) {
-        for (_, sound) in playingSounds {
-            if let groupKey = groupKey, sound.groupKey != groupKey {
+        for (_, playableItem) in playingSounds {
+            if let groupKey = groupKey, playableItem.groupKey != groupKey {
                 continue
             }
-            stop(sound)
+            stopItem(playableItem)
+        }
+    }
+    
+    
+    // MARK: - Helpers
+    fileprivate class func playItem(_ playableItem: Playable, completion: SoundCompletion? = nil) {
+        if !Soundable.soundEnabled {
+            completion?(SBError.playingFailed(reason: .audioDisabled))
+            return
         }
         
-        for (_, queue) in playingQueues {
-            if let groupKey = groupKey, queue.groupKey != groupKey {
-                continue
-            }
-            stopQueue(queue)
-        }
-    }
-    
-    
-    // MARK: - Private
-    private class func remove(_ sound: Sound) {
-        if let urlString = sound.url?.absoluteString {
-            playingSounds.removeValue(forKey: urlString)
-        }
-        print("playing sounds: \(playingSounds)")
-    }
-    
-    private class func removeQueue(_ soundsQueue: SoundsQueue) {
-        playingQueues.removeValue(forKey: soundsQueue.identifier)
+        addPlayableItem(playableItem)
         
-        print("playing queues: \(playingQueues)")
+        playableItem.play(groupKey: playableItem.groupKey, loopsCount: playableItem.loopsCount) { error in
+            removePlayableItem(playableItem)
+            completion?(error)
+        }
     }
     
+    internal class func addPlayableItem(_ playableItem: Playable) {
+        let identifier = playableItem.identifier
+        if playingSounds[identifier] == nil {
+            playingSounds[identifier] = playableItem
+            
+            print("[adding] playing sounds: \(playingSounds)")
+        }
+    }
+    
+    internal class func removePlayableItem(_ playableItem: Playable) {
+        playingSounds.removeValue(forKey: playableItem.identifier)
+        
+        print("[removing] playing sounds: \(playingSounds)")
+    }
 }
 
 
 extension Sequence where Iterator.Element == Sound {
-    func play(_ completion: SoundCompletion? = nil) {
-        Soundable.play(sounds: self as! [Sound], completion: completion)
+    func play(groupKey: String = SoundableKey.DefaultGroupKey, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
+        let sounds = self as! [Sound]
+        if sounds.count == 0 {
+            completion?(SBError.playingFailed(reason: .noSoundsToPlay))
+            return
+        }
+        
+        Soundable.play(sounds: sounds, groupKey: groupKey, loopsCount: loopsCount, completion: completion)
     }
 }

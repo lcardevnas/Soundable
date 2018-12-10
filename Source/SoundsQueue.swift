@@ -17,12 +17,12 @@ extension Notification.Name {
 }
 
 public class SoundsQueue : Playable {
-    
     var queuePlayer: AVQueuePlayer?
 
     public var groupKey: String = SoundableKey.DefaultGroupKey
-    var numberOfLoops = 0
-    var identifier = ""
+    public var identifier = ""
+    public var loopsCount = 0
+    public var url: URL?
     
     private var sounds: [Sound] = []
     private var pendingNumberOfSoundsToPlay = 0
@@ -33,7 +33,7 @@ public class SoundsQueue : Playable {
     private init() { }
     
     init(sounds: [Sound]) {
-        self.sounds = sounds
+        self.sounds = sounds.filter({ $0.player != nil })
         self.identifier = uniqueString()
         
         NotificationCenter.default.addObserver(self,
@@ -41,21 +41,30 @@ public class SoundsQueue : Playable {
                                                name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
                                                object: nil)
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(playerItemDidReachEnd),
+                                               name: NSNotification.Name.AVPlayerItemFailedToPlayToEndTime,
+                                               object: nil)
+        
         createPlayer()
+    }
+    
+    deinit {
+        print("deallocating queue")
     }
     
     
     // MARK: - Actions
-    @objc func playerItemDidReachEnd() {
+    @objc func playerItemDidReachEnd(_ notification: Notification) {
         pendingNumberOfSoundsToPlay -= 1
         if pendingNumberOfSoundsToPlay <= 0 {
-            if numberOfLoopsPlayed >= numberOfLoops {
+            if numberOfLoopsPlayed >= loopsCount {
                 numberOfLoopsPlayed = 0
                 
                 let completion = objc_getAssociatedObject(self, &associatedSoundsQueueCompletionKey) as? SoundCompletion
                 completion?(nil)
                 
-                objc_removeAssociatedObjects(self)
+                objc_setAssociatedObject(self, &associatedSoundsQueueCompletionKey, nil, .OBJC_ASSOCIATION_COPY_NONATOMIC)
             }
             else {
                 numberOfLoopsPlayed += 1
@@ -94,8 +103,13 @@ public class SoundsQueue : Playable {
 // MARK: - Playable
 extension SoundsQueue {
     public func play(groupKey: String? = nil, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
+        if !Soundable.soundEnabled {
+            completion?(SBError.playingFailed(reason: .audioDisabled))
+            return
+        }
+        
         self.groupKey = groupKey ?? SoundableKey.DefaultGroupKey
-        self.numberOfLoops = loopsCount
+        self.loopsCount = loopsCount
         
         if let completion = completion {
             objc_setAssociatedObject(self, &associatedSoundsQueueCompletionKey, completion, .OBJC_ASSOCIATION_COPY_NONATOMIC)
@@ -103,7 +117,7 @@ extension SoundsQueue {
         
         queuePlayer?.play()
         
-        Soundable.playQueue(self, completion: completion)
+        Soundable.addPlayableItem(self)
     }
     
     public func pause() {
@@ -111,6 +125,8 @@ extension SoundsQueue {
     }
     
     public func stop() {
-        Soundable.stopQueue(self)
+        queuePlayer?.removeAllItems()
+        
+        Soundable.removePlayableItem(self)
     }
 }
