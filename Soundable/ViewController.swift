@@ -70,6 +70,7 @@ class ViewController: UIViewController {
             if let error = error {
                 print("error: \(error.localizedDescription)")
             }
+            print("finished playing queue!")
             self.tableView?.isUserInteractionEnabled = true
         }
     }
