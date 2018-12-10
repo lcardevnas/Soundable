@@ -24,30 +24,46 @@
 
 import AVFoundation
 
-public typealias SoundQueueCompletion = (_ sound: Sound?) -> Void
-
+/// The associated key for the completion closure.
 fileprivate var associatedSoundsQueueCompletionKey = "kAssociatedSoundsQueueCompletionKey"
 
 extension Notification.Name {
     static let QueuePlayerPlayedToEnd = Notification.Name(rawValue: "QueuePlayerPlayedToEnd")
 }
 
+/// An object to encapsulate playing queues functionality.
 public class SoundsQueue : Playable {
+    /// The queue player that will play the queued sounds.
     var queuePlayer: AVQueuePlayer?
 
+    /// The group key where to play the sound queue.
     public var groupKey: String = SoundableKey.DefaultGroupKey
+    
+    /// The identifier for the sounds queue.
     public var identifier = ""
+    
+    /// The number of times the queue will be played.
     public var loopsCount = 0
+    
+    /// Not used in this object.
     public var url: URL?
     
+    /// The array of `Sound` objects to be played.
     private var sounds: [Sound] = []
+    
+    /// Keeps track of the remaining number of sounds to play.
     private var pendingNumberOfSoundsToPlay = 0
+    
+    /// Keeps track of the times the sounds queue has been played.
     private var numberOfLoopsPlayed = 0
     
     
     // MARK: - Initializers
     private init() { }
     
+    /// Created a `SoundsQueue` object with the given sounds.
+    ///
+    /// - parameter sounds: An array of `Sound` object to play.
     init(sounds: [Sound]) {
         self.sounds = sounds.filter({ $0.player != nil })
         self.identifier = uniqueString()
@@ -61,13 +77,13 @@ public class SoundsQueue : Playable {
                                                selector: #selector(playerItemDidReachEnd),
                                                name: NSNotification.Name.AVPlayerItemFailedToPlayToEndTime,
                                                object: nil)
-        
         createPlayer()
     }
     
     
     // MARK: - Actions
-    @objc func playerItemDidReachEnd(_ notification: Notification) {
+    /// Funcion called after each sound has finished playing.
+    @objc fileprivate func playerItemDidReachEnd() {
         pendingNumberOfSoundsToPlay -= 1
         if pendingNumberOfSoundsToPlay <= 0 {
             if numberOfLoopsPlayed >= loopsCount {
@@ -114,6 +130,13 @@ public class SoundsQueue : Playable {
 
 // MARK: - Playable
 extension SoundsQueue {
+    /// Plays the current sounds queue.
+    ///
+    /// - parameter groupKey:     The group where the sounds queue will be played.
+    /// - parameter loopsCount:   The number of times the sounds queue will be played before calling
+    ///                             the completion closure.
+    /// - parameter completion:   The completion closure called after the sounds queue has
+    ///                             finished playing.
     public func play(groupKey: String? = nil, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
         if !Soundable.soundEnabled {
             completion?(SBError.playingFailed(reason: .audioDisabled))
@@ -132,10 +155,12 @@ extension SoundsQueue {
         Soundable.addPlayableItem(self)
     }
     
+    /// Pauses the sounds queue.
     public func pause() {
         queuePlayer?.pause()
     }
     
+    /// Stops the sounds queue.
     public func stop() {
         queuePlayer?.removeAllItems()
         

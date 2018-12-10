@@ -53,6 +53,11 @@ public class Sound : NSObject, Playable {
     // MARK: - Initializers
     override private init() { }
     
+    /// Creates a `Sound` object for the given audio file.
+    ///
+    /// - parameter fileName:   The name of the file with its extension.
+    /// - parameter bundle:     The bundle where the audio file is located. By default it
+    ///                             uses the main bundle.
     init(fileName: String, bundle: Bundle = Bundle.main) {
         super.init()
         
@@ -69,6 +74,9 @@ public class Sound : NSObject, Playable {
         preparePlayer()
     }
     
+    /// Creates a `Sound` object for the given url.
+    ///
+    /// - parameter url:    The url of the audio file to be played.
     init(url: URL) {
         super.init()
         
@@ -80,8 +88,8 @@ public class Sound : NSObject, Playable {
     }
     
     
-    // MARK: - Helpers
-    fileprivate func preparePlayer() {
+    // MARK: - Private
+    private func preparePlayer() {
         if identifier == "" {
             print("could not create an identifier for the sound")
             return
@@ -106,6 +114,13 @@ public class Sound : NSObject, Playable {
 
 // MARK: - Playable
 extension Sound {
+    // MARK: - Playing sounds
+    /// Plays the current sound.
+    ///
+    /// - parameter groupKey:       The group where the sound will be played.
+    /// - parameter loopsCount:     The number of times the sound will be played before calling
+    ///                                 the completion closure.
+    /// - parameter completion:     The completion closure called after the sound has finished playing.
     public func play(groupKey: String? = nil, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
         if player == nil {
             completion?(SBError.playingFailed(reason: .wrongUrl))
@@ -129,10 +144,12 @@ extension Sound {
         Soundable.addPlayableItem(self)
     }
     
+    /// Pauses the sound.
     public func pause() {
         player?.pause()
     }
     
+    /// Stops the sound.
     public func stop() {
         player?.stop()
         
@@ -163,6 +180,10 @@ extension Sound : AVAudioPlayerDelegate {
 
 
 extension String {
+    /// Tries to play the audio file by the fileName given in the `String`.
+    ///
+    /// - parameter completion:     The completion closure called after the sound has finished playing
+    ///                                 or an error if any.
     public func tryToPlay(_ completion: SoundCompletion? = nil) {
         let sound = Sound(fileName: self)
         sound.play { error in
@@ -173,6 +194,10 @@ extension String {
 
 
 extension URL {
+    /// Tries to play the audio file by the url given.
+    ///
+    /// - parameter completion:     The completion closure called after the sound has finished playing
+    ///                                 or an error if any.
     public func tryToPlay(_ completion: SoundCompletion? = nil) {
         let sound = Sound(url: self)
         sound.play { error in

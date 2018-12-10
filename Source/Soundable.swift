@@ -24,17 +24,22 @@
 
 import AVFoundation
 
+/// A closure called after playing a sound or sound queue.
 public typealias SoundCompletion = (_ error: Error?) -> Void
 
+/// Static keys used in the library.
 public struct SoundableKey {
     public static let SoundEnabled      = "kSoundableSoundEnabled"
     public static let DefaultGroupKey   = "kSoundableDefaultGroupKey"
 }
 
+/// `Soundable` is a class that acts as a manager of all the playing sounds.
 public class Soundable {
     
+    /// An array of `Playable` objects to track the playing sounds and queues.
     private static var playingSounds: [String: Playable] = [:]
     
+    /// Enables/disables the sounds played using `Soundable` functions.
     public static var soundEnabled: Bool = {
         guard let value = UserDefaults.standard.string(forKey: SoundableKey.SoundEnabled) else {
             return true
@@ -50,6 +55,13 @@ public class Soundable {
     
     
     // MARK: - Playing sounds
+    /// Plays the given audio file.
+    ///
+    /// - parameter fileName:       The name of the file with its extension.
+    /// - parameter groupKey:       The group where the audio will be played.
+    /// - parameter loopsCount:     The number of times the sound will be played before calling
+    ///                                 the completion closure.
+    /// - parameter completion:     The completion closure called after the audio has finished playing.
     public class func play(fileName: String, groupKey: String = SoundableKey.DefaultGroupKey, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
         let sound = Sound(fileName: fileName)
         sound.groupKey = groupKey
@@ -57,12 +69,23 @@ public class Soundable {
         play(sound, completion: completion)
     }
     
+    /// Plays the given sound.
+    ///
+    /// - parameter sound:      The sound object to be played.
+    /// - parameter completion: The completion closure called after the audio has finished playing.
     public class func play(_ sound: Sound, completion: SoundCompletion? = nil) {
         playItem(sound, completion: completion)
     }
     
     
     // MARK: - Playing sounds queues
+    /// Plays the given sounds in sequence.
+    ///
+    /// - parameter sounds:       An array of `Sound` objects to be played in sequence.
+    /// - parameter groupKey:     The group where the sounds will be played.
+    /// - parameter loopsCount:   The number of times the sounds will be played before calling
+    ///                             the completion closure.
+    /// - parameter completion:   The completion closure called after the sounds has finished playing.
     public class func play(sounds: [Sound], groupKey: String = SoundableKey.DefaultGroupKey, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
         let soundsQueue = SoundsQueue(sounds: sounds)
         soundsQueue.groupKey = groupKey
@@ -70,24 +93,35 @@ public class Soundable {
         playQueue(soundsQueue, completion: completion)
     }
     
+    /// Plays the given sound queue.
+    ///
+    /// - parameter soundsQueue:    The sound queue object to be played.
+    /// - parameter completion:     The completion closure called after the sound queue has
+    ///                                 finished playing.
     public class func playQueue(_ soundsQueue: SoundsQueue, completion: SoundCompletion? = nil) {
         playItem(soundsQueue, completion: completion)
     }
     
     
     // MARK: - Stop sounds
+    /// Stops the given `Sound` object.
     public class func stop(_ sound: Sound) {
         sound.stop()
     }
     
+    /// Stops the given `SoundsQueue` object.
     public class func stopQueue(_ soundsQueue: SoundsQueue) {
         soundsQueue.stop()
     }
     
+    /// Stops a `Playable` item.
     public class func stopItem(_ playableItem: Playable) {
         playableItem.stop()
     }
     
+    /// Stops a sound with the given identifier.
+    ///
+    /// - parameter identifier: The identifier of the item to stop.
     public class func stopSound(with identifier: String? = nil) {
         for (_, playableItem) in playingSounds {
             if playableItem.identifier == identifier {
@@ -97,6 +131,10 @@ public class Soundable {
         }
     }
     
+    /// Stops all the sounds currently playing by the `Soundable` library. If the `groupKey`
+    /// parameter is set, the function only stops the sounds grouped under that `groupKey`.
+    ///
+    /// - parameter groupKey: The group key whose sounds needs to stop.
     public class func stopAll(for groupKey: String? = nil) {
         for (_, playableItem) in playingSounds {
             if let groupKey = groupKey, playableItem.groupKey != groupKey {
@@ -136,6 +174,12 @@ public class Soundable {
 
 
 extension Sequence where Iterator.Element == Sound {
+    /// Plays the array of `Sound` objects.
+    ///
+    /// - parameter groupKey:     The group where the sounds will be played.
+    /// - parameter loopsCount:   The number of times the sounds will be played before calling
+    ///                             the completion closure.
+    /// - parameter completion:   The completion closure called after the sounds has finished playing.
     public func play(groupKey: String = SoundableKey.DefaultGroupKey, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
         let sounds = self as! [Sound]
         if sounds.count == 0 {
