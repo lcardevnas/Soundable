@@ -197,3 +197,7 @@ sound.play(groupKey: "game_sounds", loopsCount: 2) { error in
 ```
 
 The sound or sound queue will play a total of `loopsCount + 1` times before it triggers the completion closure.
+
+## Credits
+
+The sounds in the code example has been downloaded from the FreeSound database ([https://freesound.org](https://freesound.org/)).
