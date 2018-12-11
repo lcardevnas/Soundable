@@ -64,7 +64,7 @@ public class SoundsQueue : Playable {
     /// Created a `SoundsQueue` object with the given sounds.
     ///
     /// - parameter sounds: An array of `Sound` object to play.
-    init(sounds: [Sound]) {
+    public init(sounds: [Sound]) {
         self.sounds = sounds.filter({ $0.player != nil })
         self.identifier = uniqueString()
         
