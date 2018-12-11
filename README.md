@@ -15,6 +15,8 @@ Soundable is a tiny library that uses `AVFoundation` to manage the playing of so
 	- [Multiple Sounds](#multiple-sounds)
 - [Stop Sounds](#stop-sounds)
 - [Looped Sounds](#looped-sounds)
+- [Disabling Sounds](#disabling-sounds)
+- [Credits](#credits)
 
 
 ## TO-DO
@@ -197,6 +199,16 @@ sound.play(groupKey: "game_sounds", loopsCount: 2) { error in
 ```
 
 The sound or sound queue will play a total of `loopsCount + 1` times before it triggers the completion closure.
+
+## Disabling sounds
+
+You can enable/disable all the currently playing sounds and sound queues by setting the `soundEnabled` property of the `Soundable` class:
+
+```swift
+Soundable.soundEnabled = false
+```
+
+If disabled, it will stop all the playing sounds and sound queues and will return an error for subsequent attempts of playing sounds with the library. Disabling the sound system will not fire the completion closures.
 
 ## Credits
 
