@@ -58,7 +58,7 @@ public class Sound : NSObject, Playable {
     /// - parameter fileName:   The name of the file with its extension.
     /// - parameter bundle:     The bundle where the audio file is located. By default it
     ///                             uses the main bundle.
-    init(fileName: String, bundle: Bundle = Bundle.main) {
+    public init(fileName: String, bundle: Bundle = Bundle.main) {
         super.init()
         
         let urlName = URL(fileURLWithPath: fileName)
@@ -77,7 +77,7 @@ public class Sound : NSObject, Playable {
     /// Creates a `Sound` object for the given url.
     ///
     /// - parameter url:    The url of the audio file to be played.
-    init(url: URL) {
+    public init(url: URL) {
         super.init()
         
         self.url = url
