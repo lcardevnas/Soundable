@@ -26,6 +26,6 @@ Soundable is a tiny library that uses `AVFoundation` to manage the playing of so
   s.platform     = :ios, '9.0'
   s.requires_arc = true
 
-  s.source_files = 'Source/**/*'
+  s.source_files = 'Source/*.swift'
   
 end

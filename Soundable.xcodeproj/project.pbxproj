@@ -7,222 +7,197 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AA07044D21BE957F00A4B213 /* rain.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AA07044C21BE957F00A4B213 /* rain.mp3 */; };
-		AA8ADFAD21B6671F0052CE0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8ADFAC21B6671F0052CE0D /* AppDelegate.swift */; };
-		AA8ADFAF21B6671F0052CE0D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8ADFAE21B6671F0052CE0D /* ViewController.swift */; };
-		AA8ADFB221B6671F0052CE0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA8ADFB021B6671F0052CE0D /* Main.storyboard */; };
-		AA8ADFB421B667210052CE0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA8ADFB321B667210052CE0D /* Assets.xcassets */; };
-		AA8ADFB721B667210052CE0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA8ADFB521B667210052CE0D /* LaunchScreen.storyboard */; };
-		AA8ADFC221B667210052CE0D /* SoundableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8ADFC121B667210052CE0D /* SoundableTests.swift */; };
-		AA8ADFD021B6697E0052CE0D /* Soundable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8ADFCF21B6697E0052CE0D /* Soundable.swift */; };
-		AA8ADFD221B669990052CE0D /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8ADFD121B669990052CE0D /* Sound.swift */; };
-		AA8ADFD421B672E70052CE0D /* SBError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8ADFD321B672E70052CE0D /* SBError.swift */; };
-		AAA259AD21B7D6FB00E07F5A /* guitar-chord.wav in Resources */ = {isa = PBXBuildFile; fileRef = AAA259AA21B7D6FB00E07F5A /* guitar-chord.wav */; };
-		AAA259AE21B7D6FB00E07F5A /* guitar-songs.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AAA259AB21B7D6FB00E07F5A /* guitar-songs.mp3 */; };
-		AAA259AF21B7D6FB00E07F5A /* nature.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AAA259AC21B7D6FB00E07F5A /* nature.mp3 */; };
-		AAA259B321B81C7E00E07F5A /* SoundsQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA259B221B81C7E00E07F5A /* SoundsQueue.swift */; };
-		AAB29E3A21BE8DF70046D2DA /* SoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB29E3921BE8DF70046D2DA /* SoundCell.swift */; };
-		E91FB40021BD69950048456E /* Playable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91FB3FF21BD69950048456E /* Playable.swift */; };
-		E91FB40521BDD8910048456E /* water-stream.wav in Resources */ = {isa = PBXBuildFile; fileRef = E91FB40321BDD8910048456E /* water-stream.wav */; };
-		E91FB40621BDD8910048456E /* rain-thunder.ogg in Resources */ = {isa = PBXBuildFile; fileRef = E91FB40421BDD8910048456E /* rain-thunder.ogg */; };
+		AA5E3F9421C286530087B56F /* Soundable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA5E3F8B21C286520087B56F /* Soundable.framework */; };
+		AA5E3F9B21C286530087B56F /* Soundable.h in Headers */ = {isa = PBXBuildFile; fileRef = AA5E3F8D21C286530087B56F /* Soundable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA5E3FA821C2868E0087B56F /* Playable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E3FA321C2868E0087B56F /* Playable.swift */; };
+		AA5E3FA921C2868E0087B56F /* SBError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E3FA421C2868E0087B56F /* SBError.swift */; };
+		AA5E3FAA21C2868E0087B56F /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E3FA521C2868E0087B56F /* Sound.swift */; };
+		AA5E3FAB21C2868E0087B56F /* SoundsQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E3FA621C2868E0087B56F /* SoundsQueue.swift */; };
+		AA5E3FAC21C2868E0087B56F /* Soundable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E3FA721C2868E0087B56F /* Soundable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		AA8ADFBE21B667210052CE0D /* PBXContainerItemProxy */ = {
+		AA5E3F9521C286530087B56F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = AA8ADFA121B6671F0052CE0D /* Project object */;
+			containerPortal = AA5E3F6821C285450087B56F /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = AA8ADFA821B6671F0052CE0D;
-			remoteInfo = Soundable;
+			remoteGlobalIDString = AA5E3F8A21C286520087B56F;
+			remoteInfo = "Soundable iOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AA07044C21BE957F00A4B213 /* rain.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = rain.mp3; sourceTree = "<group>"; };
-		AA8ADFA921B6671F0052CE0D /* Soundable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Soundable.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA8ADFAC21B6671F0052CE0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AA8ADFAE21B6671F0052CE0D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		AA8ADFB121B6671F0052CE0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		AA8ADFB321B667210052CE0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		AA8ADFB621B667210052CE0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		AA8ADFB821B667210052CE0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA8ADFBD21B667210052CE0D /* SoundableTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoundableTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA8ADFC121B667210052CE0D /* SoundableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundableTests.swift; sourceTree = "<group>"; };
-		AA8ADFC321B667210052CE0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA8ADFCF21B6697E0052CE0D /* Soundable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Soundable.swift; sourceTree = "<group>"; };
-		AA8ADFD121B669990052CE0D /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
-		AA8ADFD321B672E70052CE0D /* SBError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBError.swift; sourceTree = "<group>"; };
-		AAA259AA21B7D6FB00E07F5A /* guitar-chord.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "guitar-chord.wav"; sourceTree = "<group>"; };
-		AAA259AB21B7D6FB00E07F5A /* guitar-songs.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "guitar-songs.mp3"; sourceTree = "<group>"; };
-		AAA259AC21B7D6FB00E07F5A /* nature.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = nature.mp3; sourceTree = "<group>"; };
-		AAA259B221B81C7E00E07F5A /* SoundsQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundsQueue.swift; sourceTree = "<group>"; };
-		AAB29E3921BE8DF70046D2DA /* SoundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundCell.swift; sourceTree = "<group>"; };
-		E91FB3FF21BD69950048456E /* Playable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playable.swift; sourceTree = "<group>"; };
-		E91FB40321BDD8910048456E /* water-stream.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "water-stream.wav"; sourceTree = "<group>"; };
-		E91FB40421BDD8910048456E /* rain-thunder.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "rain-thunder.ogg"; sourceTree = "<group>"; };
+		AA5E3F8B21C286520087B56F /* Soundable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Soundable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA5E3F8D21C286530087B56F /* Soundable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Soundable.h; sourceTree = "<group>"; };
+		AA5E3F8E21C286530087B56F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		AA5E3F9321C286530087B56F /* Soundable iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "Soundable iOS Tests.xctest"; path = "Soundable iOS Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA5E3F9A21C286530087B56F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA5E3FA321C2868E0087B56F /* Playable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Playable.swift; path = Source/Playable.swift; sourceTree = SOURCE_ROOT; };
+		AA5E3FA421C2868E0087B56F /* SBError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBError.swift; path = Source/SBError.swift; sourceTree = SOURCE_ROOT; };
+		AA5E3FA521C2868E0087B56F /* Sound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Sound.swift; path = Source/Sound.swift; sourceTree = SOURCE_ROOT; };
+		AA5E3FA621C2868E0087B56F /* SoundsQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoundsQueue.swift; path = Source/SoundsQueue.swift; sourceTree = SOURCE_ROOT; };
+		AA5E3FA721C2868E0087B56F /* Soundable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Soundable.swift; path = Source/Soundable.swift; sourceTree = SOURCE_ROOT; };
+		AAD2442221C2A1BB008B1EFE /* VERSION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VERSION; sourceTree = "<group>"; };
+		AAD2442321C2A1BB008B1EFE /* Soundable.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Soundable.podspec; sourceTree = "<group>"; };
+		AAD2442421C2A1BB008B1EFE /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		AA8ADFA621B6671F0052CE0D /* Frameworks */ = {
+		AA5E3F8821C286520087B56F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AA8ADFBA21B667210052CE0D /* Frameworks */ = {
+		AA5E3F9021C286530087B56F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA5E3F9421C286530087B56F /* Soundable.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AA8ADFA021B6671F0052CE0D = {
+		AA5E3F6721C285450087B56F = {
 			isa = PBXGroup;
 			children = (
-				AA8ADFAB21B6671F0052CE0D /* Soundable */,
-				AA8ADFC021B667210052CE0D /* SoundableTests */,
-				AA8ADFAA21B6671F0052CE0D /* Products */,
+				AA5E3F8521C285FC0087B56F /* Deployment */,
+				AA5E3FA221C286740087B56F /* Source */,
+				AA5E3F9721C286530087B56F /* Tests */,
+				AA5E3F7121C285450087B56F /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		AA8ADFAA21B6671F0052CE0D /* Products */ = {
+		AA5E3F7121C285450087B56F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AA8ADFA921B6671F0052CE0D /* Soundable.app */,
-				AA8ADFBD21B667210052CE0D /* SoundableTests.xctest */,
+				AA5E3F8B21C286520087B56F /* Soundable.framework */,
+				AA5E3F9321C286530087B56F /* Soundable iOS Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AA8ADFAB21B6671F0052CE0D /* Soundable */ = {
+		AA5E3F8521C285FC0087B56F /* Deployment */ = {
 			isa = PBXGroup;
 			children = (
-				AA8ADFAC21B6671F0052CE0D /* AppDelegate.swift */,
-				AA8ADFAE21B6671F0052CE0D /* ViewController.swift */,
-				AAB29E3921BE8DF70046D2DA /* SoundCell.swift */,
-				AA8ADFCE21B667870052CE0D /* Source */,
-				AA8ADFCC21B6674D0052CE0D /* Resources */,
-				AA8ADFCD21B667680052CE0D /* Supporting files */,
+				AAD2442421C2A1BB008B1EFE /* LICENSE */,
+				AAD2442321C2A1BB008B1EFE /* Soundable.podspec */,
+				AAD2442221C2A1BB008B1EFE /* VERSION */,
 			);
-			path = Soundable;
+			name = Deployment;
 			sourceTree = "<group>";
 		};
-		AA8ADFC021B667210052CE0D /* SoundableTests */ = {
+		AA5E3F9721C286530087B56F /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				AA8ADFC121B667210052CE0D /* SoundableTests.swift */,
-				AA8ADFC321B667210052CE0D /* Info.plist */,
+				AA5E3FAD21C287280087B56F /* Supporting files */,
 			);
-			path = SoundableTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
-		AA8ADFCC21B6674D0052CE0D /* Resources */ = {
+		AA5E3FA221C286740087B56F /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				AAA259A921B7D6A700E07F5A /* Sounds */,
-				AA8ADFB321B667210052CE0D /* Assets.xcassets */,
-				AA8ADFB521B667210052CE0D /* LaunchScreen.storyboard */,
-				AA8ADFB021B6671F0052CE0D /* Main.storyboard */,
+				AA5E3FA321C2868E0087B56F /* Playable.swift */,
+				AA5E3FA421C2868E0087B56F /* SBError.swift */,
+				AA5E3FA521C2868E0087B56F /* Sound.swift */,
+				AA5E3FA721C2868E0087B56F /* Soundable.swift */,
+				AA5E3FA621C2868E0087B56F /* SoundsQueue.swift */,
+				AA5E3FAE21C2878A0087B56F /* Supporting files */,
 			);
-			path = Resources;
+			path = Source;
 			sourceTree = "<group>";
 		};
-		AA8ADFCD21B667680052CE0D /* Supporting files */ = {
+		AA5E3FAD21C287280087B56F /* Supporting files */ = {
 			isa = PBXGroup;
 			children = (
-				AA8ADFB821B667210052CE0D /* Info.plist */,
+				AA5E3F9A21C286530087B56F /* Info.plist */,
 			);
-			path = "Supporting files";
+			name = "Supporting files";
 			sourceTree = "<group>";
 		};
-		AA8ADFCE21B667870052CE0D /* Source */ = {
+		AA5E3FAE21C2878A0087B56F /* Supporting files */ = {
 			isa = PBXGroup;
 			children = (
-				AA8ADFCF21B6697E0052CE0D /* Soundable.swift */,
-				AAA259B221B81C7E00E07F5A /* SoundsQueue.swift */,
-				AA8ADFD121B669990052CE0D /* Sound.swift */,
-				E91FB3FF21BD69950048456E /* Playable.swift */,
-				AA8ADFD321B672E70052CE0D /* SBError.swift */,
+				AA5E3F8E21C286530087B56F /* Info.plist */,
+				AA5E3F8D21C286530087B56F /* Soundable.h */,
 			);
-			name = Source;
-			path = ../Source;
-			sourceTree = "<group>";
-		};
-		AAA259A921B7D6A700E07F5A /* Sounds */ = {
-			isa = PBXGroup;
-			children = (
-				AAA259AA21B7D6FB00E07F5A /* guitar-chord.wav */,
-				AAA259AB21B7D6FB00E07F5A /* guitar-songs.mp3 */,
-				AAA259AC21B7D6FB00E07F5A /* nature.mp3 */,
-				E91FB40421BDD8910048456E /* rain-thunder.ogg */,
-				AA07044C21BE957F00A4B213 /* rain.mp3 */,
-				E91FB40321BDD8910048456E /* water-stream.wav */,
-			);
-			path = Sounds;
+			name = "Supporting files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
-/* Begin PBXNativeTarget section */
-		AA8ADFA821B6671F0052CE0D /* Soundable */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = AA8ADFC621B667210052CE0D /* Build configuration list for PBXNativeTarget "Soundable" */;
-			buildPhases = (
-				AA8ADFA521B6671F0052CE0D /* Sources */,
-				AA8ADFA621B6671F0052CE0D /* Frameworks */,
-				AA8ADFA721B6671F0052CE0D /* Resources */,
+/* Begin PBXHeadersBuildPhase section */
+		AA5E3F8621C286520087B56F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA5E3F9B21C286530087B56F /* Soundable.h in Headers */,
 			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Soundable;
-			productName = Soundable;
-			productReference = AA8ADFA921B6671F0052CE0D /* Soundable.app */;
-			productType = "com.apple.product-type.application";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AA8ADFBC21B667210052CE0D /* SoundableTests */ = {
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		AA5E3F8A21C286520087B56F /* Soundable iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AA8ADFC921B667210052CE0D /* Build configuration list for PBXNativeTarget "SoundableTests" */;
+			buildConfigurationList = AA5E3F9C21C286530087B56F /* Build configuration list for PBXNativeTarget "Soundable iOS" */;
 			buildPhases = (
-				AA8ADFB921B667210052CE0D /* Sources */,
-				AA8ADFBA21B667210052CE0D /* Frameworks */,
-				AA8ADFBB21B667210052CE0D /* Resources */,
+				AA5E3F8621C286520087B56F /* Headers */,
+				AA5E3F8721C286520087B56F /* Sources */,
+				AA5E3F8821C286520087B56F /* Frameworks */,
+				AA5E3F8921C286520087B56F /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				AA8ADFBF21B667210052CE0D /* PBXTargetDependency */,
 			);
-			name = SoundableTests;
-			productName = SoundableTests;
-			productReference = AA8ADFBD21B667210052CE0D /* SoundableTests.xctest */;
+			name = "Soundable iOS";
+			productName = "Soundable iOS";
+			productReference = AA5E3F8B21C286520087B56F /* Soundable.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		AA5E3F9221C286530087B56F /* Soundable iOS Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA5E3F9F21C286530087B56F /* Build configuration list for PBXNativeTarget "Soundable iOS Tests" */;
+			buildPhases = (
+				AA5E3F8F21C286530087B56F /* Sources */,
+				AA5E3F9021C286530087B56F /* Frameworks */,
+				AA5E3F9121C286530087B56F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA5E3F9621C286530087B56F /* PBXTargetDependency */,
+			);
+			name = "Soundable iOS Tests";
+			productName = "Soundable iOSTests";
+			productReference = AA5E3F9321C286530087B56F /* Soundable iOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		AA8ADFA121B6671F0052CE0D /* Project object */ = {
+		AA5E3F6821C285450087B56F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = ThXou;
 				TargetAttributes = {
-					AA8ADFA821B6671F0052CE0D = {
+					AA5E3F8A21C286520087B56F = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
-					AA8ADFBC21B667210052CE0D = {
+					AA5E3F9221C286530087B56F = {
 						CreatedOnToolsVersion = 10.1;
-						TestTargetID = AA8ADFA821B6671F0052CE0D;
 					};
 				};
 			};
-			buildConfigurationList = AA8ADFA421B6671F0052CE0D /* Build configuration list for PBXProject "Soundable" */;
+			buildConfigurationList = AA5E3F6B21C285450087B56F /* Build configuration list for PBXProject "Soundable" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -230,35 +205,26 @@
 				en,
 				Base,
 			);
-			mainGroup = AA8ADFA021B6671F0052CE0D;
-			productRefGroup = AA8ADFAA21B6671F0052CE0D /* Products */;
+			mainGroup = AA5E3F6721C285450087B56F;
+			productRefGroup = AA5E3F7121C285450087B56F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AA8ADFA821B6671F0052CE0D /* Soundable */,
-				AA8ADFBC21B667210052CE0D /* SoundableTests */,
+				AA5E3F8A21C286520087B56F /* Soundable iOS */,
+				AA5E3F9221C286530087B56F /* Soundable iOS Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		AA8ADFA721B6671F0052CE0D /* Resources */ = {
+		AA5E3F8921C286520087B56F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E91FB40521BDD8910048456E /* water-stream.wav in Resources */,
-				AA8ADFB721B667210052CE0D /* LaunchScreen.storyboard in Resources */,
-				AA07044D21BE957F00A4B213 /* rain.mp3 in Resources */,
-				AAA259AF21B7D6FB00E07F5A /* nature.mp3 in Resources */,
-				E91FB40621BDD8910048456E /* rain-thunder.ogg in Resources */,
-				AAA259AD21B7D6FB00E07F5A /* guitar-chord.wav in Resources */,
-				AA8ADFB421B667210052CE0D /* Assets.xcassets in Resources */,
-				AAA259AE21B7D6FB00E07F5A /* guitar-songs.mp3 in Resources */,
-				AA8ADFB221B6671F0052CE0D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AA8ADFBB21B667210052CE0D /* Resources */ = {
+		AA5E3F9121C286530087B56F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -268,60 +234,37 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		AA8ADFA521B6671F0052CE0D /* Sources */ = {
+		AA5E3F8721C286520087B56F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA8ADFD021B6697E0052CE0D /* Soundable.swift in Sources */,
-				AAA259B321B81C7E00E07F5A /* SoundsQueue.swift in Sources */,
-				AA8ADFAF21B6671F0052CE0D /* ViewController.swift in Sources */,
-				AAB29E3A21BE8DF70046D2DA /* SoundCell.swift in Sources */,
-				AA8ADFD421B672E70052CE0D /* SBError.swift in Sources */,
-				AA8ADFAD21B6671F0052CE0D /* AppDelegate.swift in Sources */,
-				AA8ADFD221B669990052CE0D /* Sound.swift in Sources */,
-				E91FB40021BD69950048456E /* Playable.swift in Sources */,
+				AA5E3FA821C2868E0087B56F /* Playable.swift in Sources */,
+				AA5E3FAB21C2868E0087B56F /* SoundsQueue.swift in Sources */,
+				AA5E3FAA21C2868E0087B56F /* Sound.swift in Sources */,
+				AA5E3FA921C2868E0087B56F /* SBError.swift in Sources */,
+				AA5E3FAC21C2868E0087B56F /* Soundable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AA8ADFB921B667210052CE0D /* Sources */ = {
+		AA5E3F8F21C286530087B56F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA8ADFC221B667210052CE0D /* SoundableTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		AA8ADFBF21B667210052CE0D /* PBXTargetDependency */ = {
+		AA5E3F9621C286530087B56F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = AA8ADFA821B6671F0052CE0D /* Soundable */;
-			targetProxy = AA8ADFBE21B667210052CE0D /* PBXContainerItemProxy */;
+			target = AA5E3F8A21C286520087B56F /* Soundable iOS */;
+			targetProxy = AA5E3F9521C286530087B56F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		AA8ADFB021B6671F0052CE0D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AA8ADFB121B6671F0052CE0D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		AA8ADFB521B667210052CE0D /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AA8ADFB621B667210052CE0D /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		AA8ADFC421B667210052CE0D /* Debug */ = {
+		AA5E3F8021C285460087B56F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -372,17 +315,24 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Source/Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thxou.Soundable;
+				PRODUCT_NAME = Soundable;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
 		};
-		AA8ADFC521B667210052CE0D /* Release */ = {
+		AA5E3F8121C285460087B56F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -427,125 +377,151 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Source/Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
+				PRODUCT_BUNDLE_IDENTIFIER = com.thxou.Soundable;
+				PRODUCT_NAME = Soundable;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
 		};
-		AA8ADFC721B667210052CE0D /* Debug */ = {
+		AA5E3F9D21C286530087B56F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = BZ3VSUA92U;
-				INFOPLIST_FILE = "$(SRCROOT)/Soundable/Supporting files/Info.plist";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Source/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.thxou.soundable;
+				PRODUCT_NAME = Soundable;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		AA5E3F9E21C286530087B56F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = BZ3VSUA92U;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Source/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.thxou.soundable;
+				PRODUCT_NAME = Soundable;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		AA5E3FA021C286530087B56F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BZ3VSUA92U;
+				INFOPLIST_FILE = "Soundable iOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.thxou.Soundable-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		AA8ADFC821B667210052CE0D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BZ3VSUA92U;
-				INFOPLIST_FILE = "$(SRCROOT)/Soundable/Supporting files/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.thxou.soundable;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		AA8ADFCA21B667210052CE0D /* Debug */ = {
+		AA5E3FA121C286530087B56F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BZ3VSUA92U;
-				INFOPLIST_FILE = SoundableTests/Info.plist;
+				INFOPLIST_FILE = "Soundable iOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.thxou.SoundableTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.thxou.Soundable-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Soundable.app/Soundable";
-			};
-			name = Debug;
-		};
-		AA8ADFCB21B667210052CE0D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BZ3VSUA92U;
-				INFOPLIST_FILE = SoundableTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.thxou.SoundableTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Soundable.app/Soundable";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AA8ADFA421B6671F0052CE0D /* Build configuration list for PBXProject "Soundable" */ = {
+		AA5E3F6B21C285450087B56F /* Build configuration list for PBXProject "Soundable" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AA8ADFC421B667210052CE0D /* Debug */,
-				AA8ADFC521B667210052CE0D /* Release */,
+				AA5E3F8021C285460087B56F /* Debug */,
+				AA5E3F8121C285460087B56F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA8ADFC621B667210052CE0D /* Build configuration list for PBXNativeTarget "Soundable" */ = {
+		AA5E3F9C21C286530087B56F /* Build configuration list for PBXNativeTarget "Soundable iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AA8ADFC721B667210052CE0D /* Debug */,
-				AA8ADFC821B667210052CE0D /* Release */,
+				AA5E3F9D21C286530087B56F /* Debug */,
+				AA5E3F9E21C286530087B56F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA8ADFC921B667210052CE0D /* Build configuration list for PBXNativeTarget "SoundableTests" */ = {
+		AA5E3F9F21C286530087B56F /* Build configuration list for PBXNativeTarget "Soundable iOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AA8ADFCA21B667210052CE0D /* Debug */,
-				AA8ADFCB21B667210052CE0D /* Release */,
+				AA5E3FA021C286530087B56F /* Debug */,
+				AA5E3FA121C286530087B56F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = AA8ADFA121B6671F0052CE0D /* Project object */;
+	rootObject = AA5E3F6821C285450087B56F /* Project object */;
 }

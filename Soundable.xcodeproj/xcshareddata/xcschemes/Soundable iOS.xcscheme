@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AA8ADFA821B6671F0052CE0D"
-               BuildableName = "Soundable.app"
-               BlueprintName = "Soundable"
+               BlueprintIdentifier = "AA5E3F8A21C286520087B56F"
+               BuildableName = "Soundable_iOS.framework"
+               BlueprintName = "Soundable iOS"
                ReferencedContainer = "container:Soundable.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AA8ADFBC21B667210052CE0D"
-               BuildableName = "SoundableTests.xctest"
-               BlueprintName = "SoundableTests"
+               BlueprintIdentifier = "AA5E3F9221C286530087B56F"
+               BuildableName = "Soundable iOS Tests.framework"
+               BlueprintName = "Soundable iOS Tests"
                ReferencedContainer = "container:Soundable.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -42,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AA8ADFA821B6671F0052CE0D"
-            BuildableName = "Soundable.app"
-            BlueprintName = "Soundable"
+            BlueprintIdentifier = "AA5E3F8A21C286520087B56F"
+            BuildableName = "Soundable_iOS.framework"
+            BlueprintName = "Soundable iOS"
             ReferencedContainer = "container:Soundable.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -61,16 +61,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AA8ADFA821B6671F0052CE0D"
-            BuildableName = "Soundable.app"
-            BlueprintName = "Soundable"
+            BlueprintIdentifier = "AA5E3F8A21C286520087B56F"
+            BuildableName = "Soundable_iOS.framework"
+            BlueprintName = "Soundable iOS"
             ReferencedContainer = "container:Soundable.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -80,16 +79,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AA8ADFA821B6671F0052CE0D"
-            BuildableName = "Soundable.app"
-            BlueprintName = "Soundable"
+            BlueprintIdentifier = "AA5E3F8A21C286520087B56F"
+            BuildableName = "Soundable_iOS.framework"
+            BlueprintName = "Soundable iOS"
             ReferencedContainer = "container:Soundable.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

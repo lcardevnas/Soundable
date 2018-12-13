@@ -23,6 +23,7 @@
 //
 
 import UIKit
+import Soundable
 
 typealias PlayButtonClosure = () -> Void
 

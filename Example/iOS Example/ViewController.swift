@@ -23,6 +23,7 @@
 //
 
 import UIKit
+import Soundable
 
 struct CellIdentifier {
     static let SoundCell = "SoundCell"
