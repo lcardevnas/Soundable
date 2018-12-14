@@ -35,11 +35,21 @@ Soundable is a tiny library that uses `AVFoundation` to manage the playing of so
 
 ### Cocoapods
 
-Add this line to your podfile:
+Add this line to your `Podfile`:
 
 ```ruby
-pod 'Soundable'
+pod 'Soundable', '~> 1.0'
 ```
+
+### Carthage
+
+Add this line to your `cartfile`:
+
+```ruby
+github "ThXou/Soundable" ~> 1.0
+```
+
+And then follow the official documentation about [Adding frameworks to an application](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application).
 
 ## Setup
 
