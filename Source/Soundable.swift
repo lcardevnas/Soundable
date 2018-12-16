@@ -132,7 +132,7 @@ public class Soundable {
     }
     
     /// Stops all the sounds currently playing by the `Soundable` library. If the `groupKey`
-    /// parameter is set, the function only stops the sounds grouped under that `groupKey`.
+    /// parameter is set, the function only stops the sounds grouped under the group key.
     ///
     /// - parameter groupKey: The group key whose sounds needs to stop.
     public class func stopAll(for groupKey: String? = nil) {
@@ -141,6 +141,35 @@ public class Soundable {
                 continue
             }
             stopItem(playableItem)
+        }
+    }
+    
+    
+    // MARK: - Mutting
+    /// Mute all the sounds or sound queues currently playing by the library. If the `groupKey`
+    /// parameter is set, the function only mutes the sounds grouped under the group key.
+    ///
+    /// - parameter groupKey: The group key whose sounds needs to mute.
+    public class func muteAll(for groupKey: String? = nil) {
+        for (_, playableItem) in playingSounds {
+            if let groupKey = groupKey, playableItem.groupKey != groupKey {
+                continue
+            }
+            playableItem.mute()
+        }
+    }
+    
+    /// Unmute all the sounds or sound queues currently muted (aka volume equal to 0.0).
+    /// If the `groupKey` parameter is set, the function only unmutes the sounds grouped under
+    /// the group key.
+    ///
+    /// - parameter groupKey: The group key whose sounds needs to mute.
+    public class func unmuteAll(for groupKey: String? = nil) {
+        for (_, playableItem) in playingSounds {
+            if let groupKey = groupKey, playableItem.groupKey != groupKey {
+                continue
+            }
+            playableItem.unmute()
         }
     }
     

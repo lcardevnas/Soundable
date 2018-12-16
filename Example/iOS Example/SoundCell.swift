@@ -32,18 +32,22 @@ class SoundCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel?
     @IBOutlet weak var playButton: UIButton?
     @IBOutlet weak var pauseButton: UIButton?
+    @IBOutlet weak var muteButton: UIButton?
     
     var playTappedClosure: PlayButtonClosure?
-    var pauseTappedClosure: PlayButtonClosure?
+    
+    var sound: Sound?
 
     
-    func configureCell(with sound: Sound, isSelected: Bool, playTapped: @escaping PlayButtonClosure, pauseTapped: @escaping PlayButtonClosure) {
+    func configureCell(with sound: Sound, isSelected: Bool, playTapped: @escaping PlayButtonClosure) {
+        self.sound = sound
+        
         playTappedClosure = playTapped
-        pauseTappedClosure = pauseTapped
         
         titleLabel?.text = sound.name
         playButton?.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
         pauseButton?.addTarget(self, action: #selector(pauseButtonTapped), for: .touchUpInside)
+        muteButton?.addTarget(self, action: #selector(muteButtonTapped), for: .touchUpInside)
         
         accessoryType = isSelected ? .checkmark : .none
     }
@@ -53,7 +57,17 @@ class SoundCell: UITableViewCell {
     }
     
     @objc func pauseButtonTapped() {
-        pauseTappedClosure?()
+        sound?.pause()
+    }
+    
+    @objc func muteButtonTapped() {
+        if let isMuted = sound?.isMuted, isMuted {
+            sound?.unmute()
+            muteButton?.setTitle("Mute", for: .normal)
+        } else {
+            sound?.mute()
+            muteButton?.setTitle("Unmute", for: .normal)
+        }
     }
 
 }

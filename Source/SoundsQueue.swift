@@ -57,6 +57,17 @@ public class SoundsQueue : Playable {
     /// Keeps track of the times the sounds queue has been played.
     private var numberOfLoopsPlayed = 0
     
+    /// The volume of the sound queue items.
+    public var volume: Float {
+        get { return queuePlayer?.volume ?? 1.0 }
+        set { queuePlayer?.volume = volume }
+    }
+    
+    /// Indicates if the sound queue is currently muted.
+    public var isMuted: Bool {
+        return queuePlayer?.volume == 0.0
+    }
+    
     
     // MARK: - Initializers
     private init() { }
@@ -88,6 +99,7 @@ public class SoundsQueue : Playable {
         if pendingNumberOfSoundsToPlay <= 0 {
             if numberOfLoopsPlayed >= loopsCount {
                 numberOfLoopsPlayed = 0
+                unmute()
                 
                 let completion = objc_getAssociatedObject(self, &associatedSoundsQueueCompletionKey) as? SoundCompletion
                 completion?(nil)
@@ -163,7 +175,20 @@ extension SoundsQueue {
     /// Stops the sounds queue.
     public func stop() {
         queuePlayer?.removeAllItems()
+        unmute()
         
         Soundable.removePlayableItem(self)
+    }
+    
+    /// Mutes the sounds queue.
+    public func mute() {
+        queuePlayer?.volume = 0.0
+    }
+    
+    /// Unmutes the sounds queue.
+    public func unmute() {
+        if queuePlayer?.volume == 0.0 {
+            queuePlayer?.volume = 1.0
+        }
     }
 }

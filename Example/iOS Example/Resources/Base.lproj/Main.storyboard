@@ -13,7 +13,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Soundable" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="iOS_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="333.5" width="375" height="333.5"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SoundCell" id="5YH-fG-L1E" customClass="SoundCell" customModule="Soundable" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SoundCell" id="5YH-fG-L1E" customClass="SoundCell" customModule="iOS_Example" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5YH-fG-L1E" id="yfa-4z-XGl">
@@ -33,28 +33,35 @@
                                                     <rect key="frame" x="330" y="7" width="30" height="30"/>
                                                     <state key="normal" title="Play"/>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="niD-eH-xUH">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="niD-eH-xUH">
                                                     <rect key="frame" x="18" y="11.5" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OBb-hB-tJP">
-                                                    <rect key="frame" x="273" y="7" width="42" height="30"/>
+                                                    <rect key="frame" x="278" y="7" width="42" height="30"/>
                                                     <state key="normal" title="Pause"/>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bm1-Hd-w9l">
+                                                    <rect key="frame" x="233" y="7" width="35" height="30"/>
+                                                    <state key="normal" title="Mute"/>
                                                 </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="niD-eH-xUH" firstAttribute="leading" secondItem="yfa-4z-XGl" secondAttribute="leading" constant="18" id="8ru-Jy-C0U"/>
+                                                <constraint firstItem="bm1-Hd-w9l" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="niD-eH-xUH" secondAttribute="trailing" constant="15" id="BHJ-gX-zIL"/>
                                                 <constraint firstItem="OBb-hB-tJP" firstAttribute="centerY" secondItem="yfa-4z-XGl" secondAttribute="centerY" id="Nrr-pr-qt0"/>
-                                                <constraint firstItem="OBb-hB-tJP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="niD-eH-xUH" secondAttribute="trailing" constant="15" id="Tyc-Xk-iPl"/>
                                                 <constraint firstItem="niD-eH-xUH" firstAttribute="centerY" secondItem="yfa-4z-XGl" secondAttribute="centerY" id="UOn-zt-nG2"/>
-                                                <constraint firstItem="Ip5-Eb-6DB" firstAttribute="leading" secondItem="OBb-hB-tJP" secondAttribute="trailing" constant="15" id="dTi-jC-jic"/>
+                                                <constraint firstItem="OBb-hB-tJP" firstAttribute="leading" secondItem="bm1-Hd-w9l" secondAttribute="trailing" constant="10" id="b7D-Ex-yxB"/>
+                                                <constraint firstItem="bm1-Hd-w9l" firstAttribute="centerY" secondItem="yfa-4z-XGl" secondAttribute="centerY" id="bdM-ZD-UuS"/>
+                                                <constraint firstItem="Ip5-Eb-6DB" firstAttribute="leading" secondItem="OBb-hB-tJP" secondAttribute="trailing" constant="10" id="dTi-jC-jic"/>
                                                 <constraint firstAttribute="trailing" secondItem="Ip5-Eb-6DB" secondAttribute="trailing" constant="15" id="hSU-qF-6Ho"/>
                                                 <constraint firstItem="Ip5-Eb-6DB" firstAttribute="centerY" secondItem="yfa-4z-XGl" secondAttribute="centerY" id="u4p-9z-7T6"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="muteButton" destination="bm1-Hd-w9l" id="ges-jp-nj5"/>
                                             <outlet property="pauseButton" destination="OBb-hB-tJP" id="5sP-GH-cgl"/>
                                             <outlet property="playButton" destination="Ip5-Eb-6DB" id="NSU-dL-6k6"/>
                                             <outlet property="titleLabel" destination="niD-eH-xUH" id="Ocf-Fg-Ena"/>
@@ -67,17 +74,10 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fj5-5a-7z4">
-                                <rect key="frame" x="71.5" y="273.5" width="232" height="30"/>
+                                <rect key="frame" x="71.5" y="283.5" width="232" height="30"/>
                                 <state key="normal" title="Play selected sounds in sequence"/>
                                 <connections>
                                     <action selector="playSounds:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PGl-T2-I7c"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fkh-2W-gQP">
-                                <rect key="frame" x="135" y="40" width="105" height="30"/>
-                                <state key="normal" title="Stop all sounds"/>
-                                <connections>
-                                    <action selector="stopAllSounds:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RUL-8C-beT"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="guitar-chord.wav" borderStyle="roundedRect" placeholder="Write the name as in bundle" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EW0-Tx-ji5">
@@ -94,7 +94,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ar8-R3-3jh">
-                                <rect key="frame" x="141" y="78" width="93" height="30"/>
+                                <rect key="frame" x="141" y="88" width="93" height="30"/>
                                 <state key="normal" title="Disable audio">
                                     <color key="titleColor" red="0.93333333330000001" green="0.1960784314" blue="0.14117647059999999" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
@@ -102,25 +102,32 @@
                                     <action selector="disableAudio:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NND-Ez-Ywz"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fkh-2W-gQP">
+                                <rect key="frame" x="135" y="50" width="105" height="30"/>
+                                <state key="normal" title="Stop all sounds"/>
+                                <connections>
+                                    <action selector="stopAllSounds:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RUL-8C-beT"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="ar8-R3-3jh" firstAttribute="top" secondItem="fkh-2W-gQP" secondAttribute="bottom" constant="8" id="3Xd-PR-k9G"/>
                             <constraint firstItem="fj5-5a-7z4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="AQb-BN-SVm"/>
                             <constraint firstItem="fXu-dF-Pgl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Ecw-ut-JUa"/>
                             <constraint firstItem="fXu-dF-Pgl" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="PZq-hK-WxA"/>
+                            <constraint firstItem="fkh-2W-gQP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Rch-At-grk"/>
                             <constraint firstItem="EW0-Tx-ji5" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.55" id="Ty1-Oa-vrm"/>
-                            <constraint firstItem="ar8-R3-3jh" firstAttribute="centerX" secondItem="fkh-2W-gQP" secondAttribute="centerX" id="UwA-5f-sCL"/>
-                            <constraint firstItem="fkh-2W-gQP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="VKf-1T-1HA"/>
+                            <constraint firstItem="ar8-R3-3jh" firstAttribute="top" secondItem="fkh-2W-gQP" secondAttribute="bottom" constant="8" id="aLZ-Pg-asP"/>
+                            <constraint firstItem="fXu-dF-Pgl" firstAttribute="top" secondItem="fj5-5a-7z4" secondAttribute="bottom" constant="20" id="e3h-Ee-fBg"/>
                             <constraint firstItem="k27-VU-qu3" firstAttribute="centerY" secondItem="EW0-Tx-ji5" secondAttribute="centerY" id="eXS-DE-uUU"/>
                             <constraint firstItem="fXu-dF-Pgl" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.5" id="fZY-7R-TOr"/>
                             <constraint firstItem="EW0-Tx-ji5" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.7" id="iJM-co-Wsr"/>
                             <constraint firstItem="EW0-Tx-ji5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="izV-NG-KSQ"/>
-                            <constraint firstItem="fXu-dF-Pgl" firstAttribute="top" secondItem="fj5-5a-7z4" secondAttribute="bottom" constant="30" id="lUt-2r-Kd4"/>
+                            <constraint firstItem="fkh-2W-gQP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="ppH-Fy-biV"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="k27-VU-qu3" secondAttribute="trailing" constant="32" id="r7T-gT-g6o"/>
                             <constraint firstItem="fXu-dF-Pgl" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="td1-dF-VxK"/>
                             <constraint firstItem="k27-VU-qu3" firstAttribute="leading" secondItem="EW0-Tx-ji5" secondAttribute="trailing" constant="10" id="tdR-Ia-Cwh"/>
-                            <constraint firstItem="fkh-2W-gQP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="voV-fK-J0H"/>
+                            <constraint firstItem="ar8-R3-3jh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="v2L-K6-I4T"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

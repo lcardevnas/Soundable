@@ -24,29 +24,46 @@
 
 import AVFoundation
 
-fileprivate var associatedCompletionKey = "kAssociatedCompletionKey"
+/// The associated key for the completion closure.
+fileprivate var associatedSoundCompletionKey = "kAssociatedSoundCompletionKey"
 
+/// An object to encapsulate sound functionality.
 public class Sound : NSObject, Playable {
+    /// The player that will play the sound.
     var player: AVAudioPlayer?
     
-    public var identifier = ""
+    /// The name of the sound (file name with extension).
+    public var name: String?
+
+    /// The group key where to play the sound.
     public var groupKey: String = SoundableKey.DefaultGroupKey
+    
+    /// The identifier for the sounds queue.
+    public var identifier = ""
+    
+    /// The url where the audio file is located.
     public var url: URL?
     
-    public var loopsCount: Int = 0 {
-        didSet {
-            player?.numberOfLoops = loopsCount
-        }
+    /// The number of times the sound will be played.
+    public var loopsCount: Int {
+        get { return player?.numberOfLoops ?? 0 }
+        set { player?.numberOfLoops = loopsCount }
     }
     
-    public var name: String?
-    public var volume: Float = 1.0 {
-        didSet {
-            player?.volume = volume
-        }
+    /// The volume of the sound.
+    public var volume: Float {
+        get { return player?.volume ?? 1.0 }
+        set { player?.volume = volume }
     }
+    
+    /// Indicates if the sound is currently playing.
     public var isPlaying: Bool {
         return player?.isPlaying ?? false
+    }
+    
+    /// Indicates if the sound is currently muted.
+    public var isMuted: Bool {
+        return player?.volume == 0.0
     }
     
     
@@ -135,7 +152,7 @@ extension Sound {
         self.groupKey = groupKey ?? SoundableKey.DefaultGroupKey
         
         if let completion = completion {
-            objc_setAssociatedObject(self, &associatedCompletionKey, completion, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+            objc_setAssociatedObject(self, &associatedSoundCompletionKey, completion, .OBJC_ASSOCIATION_COPY_NONATOMIC)
         }
         
         player?.numberOfLoops = loopsCount
@@ -152,29 +169,44 @@ extension Sound {
     /// Stops the sound.
     public func stop() {
         player?.stop()
+        unmute()
         
         Soundable.removePlayableItem(self)
+    }
+    
+    /// Mute the sound.
+    public func mute() {
+        player?.volume = 0.0
+    }
+    
+    /// Unmute the sound.
+    public func unmute() {
+        if player?.volume == 0.0 {
+            player?.volume = 1.0
+        }
     }
 }
 
 
 extension Sound : AVAudioPlayerDelegate {
     public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        let completion = objc_getAssociatedObject(self, &associatedCompletionKey) as? SoundCompletion
+        let completion = objc_getAssociatedObject(self, &associatedSoundCompletionKey) as? SoundCompletion
         completion?(nil)
         
-        objc_setAssociatedObject(self, &associatedCompletionKey, nil, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+        objc_setAssociatedObject(self, &associatedSoundCompletionKey, nil, .OBJC_ASSOCIATION_COPY_NONATOMIC)
         
         Soundable.removePlayableItem(self)
+        unmute()
     }
     
     public func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
-        let completion = objc_getAssociatedObject(self, &associatedCompletionKey) as? SoundCompletion
+        let completion = objc_getAssociatedObject(self, &associatedSoundCompletionKey) as? SoundCompletion
         completion?(error)
         
-        objc_setAssociatedObject(self, &associatedCompletionKey, nil, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+        objc_setAssociatedObject(self, &associatedSoundCompletionKey, nil, .OBJC_ASSOCIATION_COPY_NONATOMIC)
         
         Soundable.removePlayableItem(self)
+        unmute()
     }
 }
 

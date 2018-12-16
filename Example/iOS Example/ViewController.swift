@@ -76,12 +76,6 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func stopAllSounds(_ sender: UIButton) {
-        Soundable.stopAll()
-        
-        tableView?.isUserInteractionEnabled = true
-    }
-    
     @IBAction func playSound(_ sender: UIButton) {
         guard let soundName = soundNameField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines), soundName != "" else {
             return
@@ -92,6 +86,12 @@ class ViewController: UIViewController {
                 print("error: \(error.localizedDescription)")
             }
         }
+    }
+    
+    @IBAction func stopAllSounds(_ sender: UIButton) {
+        Soundable.stopAll()
+        
+        tableView?.isUserInteractionEnabled = true
     }
     
     @IBAction func disableAudio(_ sender: UIButton) {
@@ -130,10 +130,8 @@ extension ViewController : UITableViewDataSource {
         let sound = sounds[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.SoundCell, for: indexPath) as! SoundCell
-        cell.configureCell(with: sound, isSelected: selectedSounds.contains(sound), playTapped: {
+        cell.configureCell(with: sound, isSelected: selectedSounds.contains(sound), playTapped: { [unowned self] in
             self.play(sound)
-        }, pauseTapped: {
-            sound.pause()
         })
         return cell
     }

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AA5E3F8A21C286520087B56F"
-               BuildableName = "Soundable_iOS.framework"
+               BuildableName = "Soundable.framework"
                BlueprintName = "Soundable iOS"
                ReferencedContainer = "container:Soundable.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA5E3F8A21C286520087B56F"
-            BuildableName = "Soundable_iOS.framework"
+            BuildableName = "Soundable.framework"
             BlueprintName = "Soundable iOS"
             ReferencedContainer = "container:Soundable.xcodeproj">
          </BuildableReference>
@@ -65,7 +65,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA5E3F8A21C286520087B56F"
-            BuildableName = "Soundable_iOS.framework"
+            BuildableName = "Soundable.framework"
             BlueprintName = "Soundable iOS"
             ReferencedContainer = "container:Soundable.xcodeproj">
          </BuildableReference>
@@ -83,7 +83,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA5E3F8A21C286520087B56F"
-            BuildableName = "Soundable_iOS.framework"
+            BuildableName = "Soundable.framework"
             BlueprintName = "Soundable iOS"
             ReferencedContainer = "container:Soundable.xcodeproj">
          </BuildableReference>

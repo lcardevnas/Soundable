@@ -125,8 +125,7 @@
 				AA5E3FBC21C29BDE0087B56F /* rain.mp3 */,
 				AA5E3FBE21C29BDE0087B56F /* water-stream.wav */,
 			);
-			name = Sounds;
-			path = "New Group";
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

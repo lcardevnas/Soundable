@@ -30,8 +30,13 @@ public protocol Playable {
     var identifier: String { get set }
     var groupKey: String { get set }
     var loopsCount: Int { get set }
+    var volume: Float { get set }
+    var isMuted: Bool { get }
     
     func play(groupKey: String?, loopsCount: Int, completion: SoundCompletion?)
     func pause()
     func stop()
+    
+    func mute()
+    func unmute()
 }
