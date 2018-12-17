@@ -14,6 +14,7 @@ Soundable is a tiny library that uses `AVFoundation` to manage the playing of so
 	- [Single Sounds](#single-sounds)
 	- [Multiple Sounds](#multiple-sounds)
 - [Stop Sounds](#stop-sounds)
+- [Mute Sounds](#mute-sounds)
 - [Looped Sounds](#looped-sounds)
 - [Disabling Sounds](#disabling-sounds)
 - [Credits](#credits)
@@ -221,7 +222,7 @@ soundsQueue.mute()
 soundsQueue.unmute()
 ```
 
-Even check for the muting state with a sound and queue's `isMuted` property.
+Even check for the muting state with the sound and queue's `isMuted` property.
 
 If the sound or queue finished while muted, the completion closure is called anyway and the mute state of the sound and queue is restored (Aka volume turns to be zero again).
 
