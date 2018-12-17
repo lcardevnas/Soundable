@@ -180,7 +180,7 @@ Or you can stop all the sounds in a specific group. I explain to you what is tha
 
 Sound groups is a feature that allows you to group sounds under the same string key, then you can stop all the sounds in that group and keep playing the rest.
 
-By default all the sounds and sound queues are created under the `Soundable.DefaultGroupKey` key. In this way, you can group for example, game sounds under the "game_sounds" key and then stop only those sounds:
+By default all the sounds and sound queues are created under the `SoundableKey.DefaultGroupKey` key. In this way, you can group for example, game sounds under the *"game_sounds"* key and then stop only those sounds:
 
 ```swift
 Soundable.stopAll(for: "game_sounds")
@@ -196,6 +196,34 @@ sound.play(groupKey: "game_sounds") { error in
    // Handle error if any
 }
 ```
+
+## Mute sounds
+
+If you don't want to completelly stop the sound but only mute all sounds that are playing (Aka put the volume to 0.0), then use the `Soundable` mute functions:
+
+```swift
+// To mute
+Soundable.muteAll()
+Soundable.muteAll(for: "game_sounds")
+
+// To unmute
+Soundable.unmuteAll()
+Soundable.unmuteAll(for: "game_sounds")
+```
+
+Alternativelly you can mute/unmute single sounds and queues:
+
+```swift
+sound.mute()
+sound.unmute()
+
+soundsQueue.mute()
+soundsQueue.unmute()
+```
+
+Even check for the muting state with a sound and queue's `isMuted` property.
+
+If the sound or queue finished while muted, the completion closure is called anyway and the mute state of the sound and queue is restored (Aka volume turns to be zero again).
 
 ## Looped Sounds
 
