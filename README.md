@@ -3,7 +3,9 @@ Overview
 
 [![Pod Version](http://img.shields.io/cocoapods/v/Soundable.svg?style=flat)](https://github.com/ThXou/Soundable)
 [![Pod Platform](http://img.shields.io/cocoapods/p/Soundable.svg?style=flat)](https://github.com/ThXou/Soundable)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Pod License](http://img.shields.io/cocoapods/l/Soundable.svg?style=flat)](https://www.apache.org/licenses/LICENSE-2.0.html)
+
 
 Soundable is a tiny library that uses `AVFoundation` to manage the playing of sounds in iOS applications in a simple and easy way. You can play single audios, in sequence and in parallel, all is handled by the Soundable library and all they have completion closures when playing finishes.
 
