@@ -65,6 +65,15 @@ class ViewController: UIViewController {
         
         // Configuring enable/disable sounds button
         configureEnableButton()
+        
+        // Observing interruptions
+        Soundable.observeInterruptions { (type, userInfo) in
+            if type == .began {
+                print("interruption began")
+            } else if type == .ended {
+                print("interruption ended")
+            }
+        }
     }
 
 

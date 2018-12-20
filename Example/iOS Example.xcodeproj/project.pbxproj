@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AA038CE321CBD3A2009D99B9 /* Soundable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD2442821C2A4CF008B1EFE /* Soundable.framework */; };
-		AA038CE421CBD3A3009D99B9 /* Soundable.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AAD2442821C2A4CF008B1EFE /* Soundable.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AA038CE621CBEE85009D99B9 /* Soundable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD2442821C2A4CF008B1EFE /* Soundable.framework */; };
+		AA038CE721CBEE85009D99B9 /* Soundable.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AAD2442821C2A4CF008B1EFE /* Soundable.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA5E3F5321C283D80087B56F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E3F5221C283D80087B56F /* AppDelegate.swift */; };
 		AA5E3F5521C283D80087B56F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E3F5421C283D80087B56F /* ViewController.swift */; };
 		AA5E3F5821C283D80087B56F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA5E3F5621C283D80087B56F /* Main.storyboard */; };
@@ -24,13 +24,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		AA038CE521CBD3A3009D99B9 /* Embed Frameworks */ = {
+		AA038CE821CBEE85009D99B9 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AA038CE421CBD3A3009D99B9 /* Soundable.framework in Embed Frameworks */,
+				AA038CE721CBEE85009D99B9 /* Soundable.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -60,7 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA038CE321CBD3A2009D99B9 /* Soundable.framework in Frameworks */,
+				AA038CE621CBEE85009D99B9 /* Soundable.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,7 +138,7 @@
 				AA5E3F4B21C283D80087B56F /* Sources */,
 				AA5E3F4C21C283D80087B56F /* Frameworks */,
 				AA5E3F4D21C283D80087B56F /* Resources */,
-				AA038CE521CBD3A3009D99B9 /* Embed Frameworks */,
+				AA038CE821CBEE85009D99B9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

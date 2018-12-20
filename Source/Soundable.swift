@@ -27,8 +27,14 @@ import AVFoundation
 /// A closure called after playing a sound or sound queue.
 public typealias SoundCompletion = (_ error: Error?) -> Void
 
-/// Alias to keep compatibility with swift versions < 4.2.
+/// A closure called when an interruption has occurred.
+public typealias AVAudioSessionInterruptionClosure = (_ type: AVAudioSession.InterruptionType, _ userInfo: [AnyHashable : Any]?) -> Void
+
+/// Alias for the `AVAudioSession.Category` type.
 public typealias SessionCategory = AVAudioSession.Category
+
+/// The associated key for the interruption closure.
+fileprivate var associatedSoundInterruptionCompletionKey = "kAssociatedSoundInterruptionCompletionKey"
 
 /// Static keys used in the library.
 public struct SoundableKey {
@@ -39,15 +45,17 @@ public struct SoundableKey {
 /// `Soundable` is a class that acts as a manager of all the playing sounds.
 public class Soundable {
     
+    private static var shared = Soundable()
+    
     /// An array of `Playable` objects to track the playing sounds and queues.
-    private static var playingSounds: [String: Playable] = [:]
+    private var playingSounds: [String: Playable] = [:]
     
     /// The apps audio shared session.
-    private static var audioSession = AVAudioSession.sharedInstance()
+    private var audioSession = AVAudioSession.sharedInstance()
     
     /// The readonly category of the current audio session.
     public static var sessionCategory: SessionCategory {
-        get { return audioSession.category }
+        get { return shared.audioSession.category }
     }
     
     /// Enables/disables the sounds played using `Soundable` functions.
@@ -69,17 +77,17 @@ public class Soundable {
     ///
     /// - parameter category:   The new category to set and activate for the audio session.
     public class func activateSession(category: SessionCategory, options: AVAudioSession.CategoryOptions = []) {
-        if !audioSession.availableCategories.contains(category) {
+        if !shared.audioSession.availableCategories.contains(category) {
             fatalError("error: The '\(category)' category is not available for this device")
         }
         
         do {
             if #available(iOS 10.0, *) {
-                try audioSession.setCategory(category, mode: .default, options: options)
+                try shared.audioSession.setCategory(category, mode: .default, options: options)
             } else {
-                audioSession.perform(NSSelectorFromString("setCategory:withOptions:error:"), with: category, with: options)
+                shared.audioSession.perform(NSSelectorFromString("setCategory:withOptions:error:"), with: category, with: options)
             }
-            try audioSession.setActive(true)
+            try shared.audioSession.setActive(true)
         }
         catch let error {
             print("error activating session with category \(category): \(error.localizedDescription)")
@@ -88,10 +96,28 @@ public class Soundable {
     
     /// Deactivates the current audio session.
     public class func deactivateSession() {
-        do { try audioSession.setActive(false) }
+        do { try shared.audioSession.setActive(false) }
         catch let error {
             print("error deactivating session \(error.localizedDescription)")
         }
+    }
+    
+    /// Setup an observer for audio interruptions in the playing session.
+    ///
+    /// Interruptions occur when other applications start playing audio, make calls or similar, requiring your
+    /// app to stop the audio currently playing.
+    ///
+    /// - parameter interruptionClosure:    The interruption closure to be called when an interruption has ocurred
+    ///                                         in the session. It returns the parameter `type`, which indicates if
+    ///                                         the interruption has `began` or `ended`, and the parameter `userInfo`
+    ///                                         which contains the notification's userInfo for further handling.
+    public class func observeInterruptions(_ interruptionClosure: @escaping AVAudioSessionInterruptionClosure) {
+        objc_setAssociatedObject(self, &associatedSoundInterruptionCompletionKey, interruptionClosure, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+        
+        NotificationCenter.default.addObserver(Soundable.shared,
+                                               selector: #selector(handleInterruption),
+                                               name: AVAudioSession.interruptionNotification,
+                                               object: nil)
     }
     
     
@@ -164,7 +190,7 @@ public class Soundable {
     ///
     /// - parameter identifier: The identifier of the item to stop.
     public class func stopSound(with identifier: String? = nil) {
-        for (_, playableItem) in playingSounds {
+        for (_, playableItem) in shared.playingSounds {
             if playableItem.identifier == identifier {
                 stopItem(playableItem)
                 return
@@ -208,7 +234,27 @@ public class Soundable {
     }
     
     
+    // MARK: - Actions
+    @objc private func handleInterruption(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+            let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+            let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
+                Soundable.removeAssociatedObject()
+                return
+        }
+        
+        let completion = objc_getAssociatedObject(self, &associatedSoundInterruptionCompletionKey) as? AVAudioSessionInterruptionClosure
+        completion?(type, userInfo)
+        
+        Soundable.removeAssociatedObject()
+    }
+    
+    
     // MARK: - Helpers
+    private class func removeAssociatedObject() {
+        objc_setAssociatedObject(self, &associatedSoundInterruptionCompletionKey, nil, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+    }
+    
     fileprivate class func playItem(_ playableItem: Playable, completion: SoundCompletion? = nil) {
         if !Soundable.soundEnabled {
             completion?(SBError.playingFailed(reason: .audioDisabled))
@@ -224,7 +270,7 @@ public class Soundable {
     }
     
     fileprivate class func usableItemInPlayingSounds(for groupKey: String? = nil, _ closure: ((_ playableItem: Playable) -> ())) {
-        for (_, playableItem) in playingSounds {
+        for (_, playableItem) in shared.playingSounds {
             if let groupKey = groupKey, playableItem.groupKey != groupKey {
                 continue
             }
@@ -234,13 +280,13 @@ public class Soundable {
     
     internal class func addPlayableItem(_ playableItem: Playable) {
         let identifier = playableItem.identifier
-        if playingSounds[identifier] == nil {
-            playingSounds[identifier] = playableItem
+        if shared.playingSounds[identifier] == nil {
+            shared.playingSounds[identifier] = playableItem
         }
     }
     
     internal class func removePlayableItem(_ playableItem: Playable) {
-        playingSounds.removeValue(forKey: playableItem.identifier)
+        shared.playingSounds.removeValue(forKey: playableItem.identifier)
     }
 }
 
