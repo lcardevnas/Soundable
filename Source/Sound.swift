@@ -29,6 +29,7 @@ fileprivate var associatedSoundCompletionKey = "kAssociatedSoundCompletionKey"
 
 /// An object to encapsulate sound functionality.
 public class Sound : NSObject, Playable {
+    
     /// The player that will play the sound.
     var player: AVAudioPlayer?
     
@@ -117,6 +118,7 @@ public class Sound : NSObject, Playable {
                 player = try AVAudioPlayer(contentsOf: url)
                 player?.prepareToPlay()
                 player?.delegate = self
+                player?.volume = 1.0
             } else {
                 print("missing audio url to play")
             }

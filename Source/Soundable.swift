@@ -27,6 +27,9 @@ import AVFoundation
 /// A closure called after playing a sound or sound queue.
 public typealias SoundCompletion = (_ error: Error?) -> Void
 
+/// Alias to keep compatibility with swift versions < 4.2.
+public typealias SessionCategory = AVAudioSession.Category
+
 /// Static keys used in the library.
 public struct SoundableKey {
     public static let SoundEnabled      = "kSoundableSoundEnabled"
@@ -39,6 +42,14 @@ public class Soundable {
     /// An array of `Playable` objects to track the playing sounds and queues.
     private static var playingSounds: [String: Playable] = [:]
     
+    /// The apps audio shared session.
+    private static var audioSession = AVAudioSession.sharedInstance()
+    
+    /// The readonly category of the current audio session.
+    public static var sessionCategory: SessionCategory {
+        get { return audioSession.category }
+    }
+    
     /// Enables/disables the sounds played using `Soundable` functions.
     public static var soundEnabled: Bool = {
         guard let value = UserDefaults.standard.string(forKey: SoundableKey.SoundEnabled) else {
@@ -46,10 +57,40 @@ public class Soundable {
         }
         return value == "true"
         }() { didSet {
-            UserDefaults.standard.set(!soundEnabled ? "true" : "false", forKey: SoundableKey.SoundEnabled)
+            UserDefaults.standard.set(soundEnabled ? "true" : "false", forKey: SoundableKey.SoundEnabled)
             if !soundEnabled {
                 stopAll()
             }
+        }
+    }
+    
+    // MARK: - Audio Session
+    /// Sets and activate a new category for the audio session.
+    ///
+    /// - parameter category:   The new category to set and activate for the audio session.
+    public class func activateSession(category: SessionCategory, options: AVAudioSession.CategoryOptions = []) {
+        if !audioSession.availableCategories.contains(category) {
+            fatalError("error: The '\(category)' category is not available for this device")
+        }
+        
+        do {
+            if #available(iOS 10.0, *) {
+                try audioSession.setCategory(category, mode: .default, options: options)
+            } else {
+                audioSession.perform(NSSelectorFromString("setCategory:withOptions:error:"), with: category, with: options)
+            }
+            try audioSession.setActive(true)
+        }
+        catch let error {
+            print("error activating session with category \(category): \(error.localizedDescription)")
+        }
+    }
+    
+    /// Deactivates the current audio session.
+    public class func deactivateSession() {
+        do { try audioSession.setActive(false) }
+        catch let error {
+            print("error deactivating session \(error.localizedDescription)")
         }
     }
     
@@ -136,25 +177,21 @@ public class Soundable {
     ///
     /// - parameter groupKey: The group key whose sounds needs to stop.
     public class func stopAll(for groupKey: String? = nil) {
-        for (_, playableItem) in playingSounds {
-            if let groupKey = groupKey, playableItem.groupKey != groupKey {
-                continue
-            }
+        usableItemInPlayingSounds(for: groupKey) { (playableItem) in
             stopItem(playableItem)
         }
     }
     
     
-    // MARK: - Mutting
+    // MARK: - Muting sounds
     /// Mute all the sounds or sound queues currently playing by the library. If the `groupKey`
     /// parameter is set, the function only mutes the sounds grouped under the group key.
     ///
+    /// When a muted sound finishes playing the completion closure is called anyway.
+    ///
     /// - parameter groupKey: The group key whose sounds needs to mute.
     public class func muteAll(for groupKey: String? = nil) {
-        for (_, playableItem) in playingSounds {
-            if let groupKey = groupKey, playableItem.groupKey != groupKey {
-                continue
-            }
+        usableItemInPlayingSounds(for: groupKey) { (playableItem) in
             playableItem.mute()
         }
     }
@@ -165,10 +202,7 @@ public class Soundable {
     ///
     /// - parameter groupKey: The group key whose sounds needs to mute.
     public class func unmuteAll(for groupKey: String? = nil) {
-        for (_, playableItem) in playingSounds {
-            if let groupKey = groupKey, playableItem.groupKey != groupKey {
-                continue
-            }
+        usableItemInPlayingSounds(for: groupKey) { (playableItem) in
             playableItem.unmute()
         }
     }
@@ -186,6 +220,15 @@ public class Soundable {
         playableItem.play(groupKey: playableItem.groupKey, loopsCount: playableItem.loopsCount) { error in
             removePlayableItem(playableItem)
             completion?(error)
+        }
+    }
+    
+    fileprivate class func usableItemInPlayingSounds(for groupKey: String? = nil, _ closure: ((_ playableItem: Playable) -> ())) {
+        for (_, playableItem) in playingSounds {
+            if let groupKey = groupKey, playableItem.groupKey != groupKey {
+                continue
+            }
+            closure(playableItem)
         }
     }
     

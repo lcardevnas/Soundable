@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA038CE321CBD3A2009D99B9 /* Soundable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD2442821C2A4CF008B1EFE /* Soundable.framework */; };
+		AA038CE421CBD3A3009D99B9 /* Soundable.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AAD2442821C2A4CF008B1EFE /* Soundable.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA5E3F5321C283D80087B56F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E3F5221C283D80087B56F /* AppDelegate.swift */; };
 		AA5E3F5521C283D80087B56F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E3F5421C283D80087B56F /* ViewController.swift */; };
 		AA5E3F5821C283D80087B56F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA5E3F5621C283D80087B56F /* Main.storyboard */; };
@@ -19,18 +21,16 @@
 		AA5E3FC521C29BDE0087B56F /* nature.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AA5E3FBF21C29BDE0087B56F /* nature.mp3 */; };
 		AA5E3FC621C29BDE0087B56F /* guitar-chord.wav in Resources */ = {isa = PBXBuildFile; fileRef = AA5E3FC021C29BDE0087B56F /* guitar-chord.wav */; };
 		AA5E3FC721C29BDE0087B56F /* rain-thunder.ogg in Resources */ = {isa = PBXBuildFile; fileRef = AA5E3FC121C29BDE0087B56F /* rain-thunder.ogg */; };
-		AAD2442921C2A4CF008B1EFE /* Soundable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD2442821C2A4CF008B1EFE /* Soundable.framework */; };
-		AAD2442A21C2A4CF008B1EFE /* Soundable.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AAD2442821C2A4CF008B1EFE /* Soundable.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		AAD2442B21C2A4CF008B1EFE /* Embed Frameworks */ = {
+		AA038CE521CBD3A3009D99B9 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AAD2442A21C2A4CF008B1EFE /* Soundable.framework in Embed Frameworks */,
+				AA038CE421CBD3A3009D99B9 /* Soundable.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -60,7 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAD2442921C2A4CF008B1EFE /* Soundable.framework in Frameworks */,
+				AA038CE321CBD3A2009D99B9 /* Soundable.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,7 +138,7 @@
 				AA5E3F4B21C283D80087B56F /* Sources */,
 				AA5E3F4C21C283D80087B56F /* Frameworks */,
 				AA5E3F4D21C283D80087B56F /* Resources */,
-				AAD2442B21C2A4CF008B1EFE /* Embed Frameworks */,
+				AA038CE521CBD3A3009D99B9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -161,6 +161,11 @@
 				TargetAttributes = {
 					AA5E3F4E21C283D80087B56F = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};

@@ -33,6 +33,7 @@ extension Notification.Name {
 
 /// An object to encapsulate playing queues functionality.
 public class SoundsQueue : Playable {
+    
     /// The queue player that will play the queued sounds.
     var queuePlayer: AVQueuePlayer?
 

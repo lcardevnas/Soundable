@@ -46,6 +46,10 @@ class ViewController: UIViewController {
     }
     
     fileprivate func setup() {
+        // Activating session to play in background
+        Soundable.activateSession(category: .playback)
+        
+        // Creating sounds to be played in sequence
         let sound1 = Sound(fileName: "guitar-chord.wav")
         let sound2 = Sound(fileName: "rain.mp3")
         let sound3 = Sound(fileName: "water-stream.wav")
@@ -54,11 +58,12 @@ class ViewController: UIViewController {
         
         sounds = [sound1, sound2, sound3, sound4, sound5]
         
-        
+        // Gesture to dismiss keyboard
         let gesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         gesture.cancelsTouchesInView = false
         view.addGestureRecognizer(gesture)
         
+        // Configuring enable/disable sounds button
         configureEnableButton()
     }
 
@@ -67,6 +72,7 @@ class ViewController: UIViewController {
     @IBAction func playSounds(_ sender: UIButton) {
         tableView?.isUserInteractionEnabled = false
         
+        // Play sounds in sequence
         selectedSounds.play { error in
             if let error = error {
                 print("error: \(error.localizedDescription)")
@@ -77,6 +83,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func playSound(_ sender: UIButton) {
+        // Playing the sound written in the text field
         guard let soundName = soundNameField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines), soundName != "" else {
             return
         }
