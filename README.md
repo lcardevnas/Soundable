@@ -19,13 +19,9 @@ Soundable is a tiny library that uses `AVFoundation` to manage the playing of so
 - [Mute Sounds](#mute-sounds)
 - [Looped Sounds](#looped-sounds)
 - [Disabling Sounds](#disabling-sounds)
+- [Setup Audio Session Category](#setup-audio-session-category)
+- [Handling Audio Interruptions](#handling-audio-interruptions)
 - [Credits](#credits)
-
-
-## TO-DO
-
-* Support `AVAudioSession` to set the category and manage audio interruptions.
-
 
 ## Requirements
 
@@ -241,7 +237,7 @@ sound.play(groupKey: "game_sounds", loopsCount: 2) { error in
 
 The sound or sound queue will play a total of `loopsCount + 1` times before it triggers the completion closure.
 
-## Disabling sounds
+## Disabling Sounds
 
 You can enable/disable all the currently playing sounds and sound queues by setting the `soundEnabled` property of the `Soundable` class:
 
@@ -250,6 +246,39 @@ Soundable.soundEnabled = false
 ```
 
 If disabled, it will stop all the playing sounds and sound queues and will return an error for subsequent attempts of playing sounds with the library. Disabling the sound system will not fire the completion closures.
+
+## Setup Audio Session Category
+
+You can setup and activate the shared `AVAudioSession` category with a single call (no error handler). For example to continue playing the sounds when in the app is in background or the device is locked (background modes required):
+
+```swift
+import AVFoundation
+
+// Setup the category
+Soundable.activateSession(category: .playback)
+```
+
+Or also deactivate the current active session category:
+
+```swift
+Soundable.deactivateSession()
+```
+
+## Handling Audio Interruptions
+
+A playing sound or sound queue can be interrupted due to many reasons. For example when you are playing your sounds and then the user receives a phone call, the operating system stops all the sounds playing arround in order to listen the incoming audio from the call. In this case, `Soundable` allows you to catch this kind of events and let you react to an audio interruption:
+
+```swift
+Soundable.observeInterruptions { (type, userInfo) in
+    if type == .began {
+        print("interruption began")
+    } else if type == .ended {
+        print("interruption ended")
+    }
+}
+```
+
+In the closure you will receive the type of interruption, whether if it has `.began` or `.ended`, and the `userInfo` object containing the details about the interruption in order to make a more finest handling.
 
 ## Credits
 
