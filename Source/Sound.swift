@@ -80,7 +80,7 @@ public class Sound : NSObject, Playable {
         super.init()
         
         let urlName = URL(fileURLWithPath: fileName)
-        let file = urlName.deletingPathExtension().lastPathComponent
+        let file = urlName.deletingPathExtension().path
         let fileExtension = urlName.pathExtension
         
         name = fileName
