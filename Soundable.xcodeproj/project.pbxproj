@@ -14,6 +14,7 @@
 		AA5E3FAA21C2868E0087B56F /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E3FA521C2868E0087B56F /* Sound.swift */; };
 		AA5E3FAB21C2868E0087B56F /* SoundsQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E3FA621C2868E0087B56F /* SoundsQueue.swift */; };
 		AA5E3FAC21C2868E0087B56F /* Soundable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E3FA721C2868E0087B56F /* Soundable.swift */; };
+		AA5E3FB121C2868E0087B56F /* SoundableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E3FB021C2868E0087B56F /* SoundableTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +38,7 @@
 		AA5E3FA521C2868E0087B56F /* Sound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Sound.swift; path = Source/Sound.swift; sourceTree = SOURCE_ROOT; };
 		AA5E3FA621C2868E0087B56F /* SoundsQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoundsQueue.swift; path = Source/SoundsQueue.swift; sourceTree = SOURCE_ROOT; };
 		AA5E3FA721C2868E0087B56F /* Soundable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Soundable.swift; path = Source/Soundable.swift; sourceTree = SOURCE_ROOT; };
+		AA5E3FB021C2868E0087B56F /* SoundableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundableTests.swift; sourceTree = "<group>"; };
 		AAD2442221C2A1BB008B1EFE /* VERSION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VERSION; sourceTree = "<group>"; };
 		AAD2442321C2A1BB008B1EFE /* Soundable.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Soundable.podspec; sourceTree = "<group>"; };
 		AAD2442421C2A1BB008B1EFE /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 		AA5E3F9721C286530087B56F /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				AA5E3FB021C2868E0087B56F /* SoundableTests.swift */,
 				AA5E3FAD21C287280087B56F /* Supporting files */,
 			);
 			path = Tests;
@@ -250,6 +253,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA5E3FB121C2868E0087B56F /* SoundableTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,7 +321,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Source/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -379,7 +383,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Source/Info.plist;
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PLIST_FILE_OUTPUT_FORMAT = binary;
@@ -400,9 +404,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = BZ3VSUA92U;
+				DEVELOPMENT_TEAM = W8ULD3TNJD;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -413,11 +417,12 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.thxou.soundable;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lcardevnas.library.soundable;
 				PRODUCT_NAME = Soundable;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -430,9 +435,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = BZ3VSUA92U;
+				DEVELOPMENT_TEAM = W8ULD3TNJD;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -443,10 +448,11 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.thxou.soundable;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lcardevnas.library.soundable;
 				PRODUCT_NAME = Soundable;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -459,7 +465,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BZ3VSUA92U;
-				INFOPLIST_FILE = "Soundable iOSTests/Info.plist";
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -467,7 +473,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.thxou.Soundable-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -478,7 +485,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BZ3VSUA92U;
-				INFOPLIST_FILE = "Soundable iOSTests/Info.plist";
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -486,7 +493,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.thxou.Soundable-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

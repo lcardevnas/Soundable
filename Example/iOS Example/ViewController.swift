@@ -97,7 +97,7 @@ class ViewController: UIViewController {
             return
         }
         
-        soundName.tryToPlay { error in
+        Soundable.play(fileName: soundName) { error in
             if let error = error {
                 print("error: \(error.localizedDescription)")
             }
@@ -170,4 +170,3 @@ extension ViewController : UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
-

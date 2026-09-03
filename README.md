@@ -1,285 +1,154 @@
-Overview
-==============
+# Soundable
 
-[![Pod Version](http://img.shields.io/cocoapods/v/Soundable.svg?style=flat)](https://github.com/ThXou/Soundable)
-[![Pod Platform](http://img.shields.io/cocoapods/p/Soundable.svg?style=flat)](https://github.com/ThXou/Soundable)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Pod License](http://img.shields.io/cocoapods/l/Soundable.svg?style=flat)](https://www.apache.org/licenses/LICENSE-2.0.html)
+[![CocoaPods](https://img.shields.io/cocoapods/v/Soundable.svg?style=flat)](https://cocoapods.org/pods/Soundable)
+[![Platform](https://img.shields.io/cocoapods/p/Soundable.svg?style=flat)](https://cocoapods.org/pods/Soundable)
+[![License](https://img.shields.io/cocoapods/l/Soundable.svg?style=flat)](LICENSE)
 
-
-Soundable is a tiny library that uses `AVFoundation` to manage the playing of sounds in iOS applications in a simple and easy way. You can play single audios, in sequence and in parallel, all is handled by the Soundable library and all they have completion closures when playing finishes.
-
-- [Requirements](#requirements)
-- [Install](#install)
-- [Setup](#setup)
-- [Playing Sounds](#playing-sounds)
-	- [Single Sounds](#single-sounds)
-	- [Multiple Sounds](#multiple-sounds)
-- [Stop Sounds](#stop-sounds)
-- [Mute Sounds](#mute-sounds)
-- [Looped Sounds](#looped-sounds)
-- [Disabling Sounds](#disabling-sounds)
-- [Setup Audio Session Category](#setup-audio-session-category)
-- [Handling Audio Interruptions](#handling-audio-interruptions)
-- [Credits](#credits)
+Soundable is a small AVFoundation-based library for playing individual sounds or sound queues in iOS applications. It supports grouping, muting, looping, stopping, completion callbacks, audio-session configuration, and interruption observation.
 
 ## Requirements
 
-* iOS 9.0+
-* Xcode 10.0+
-* Swift 4.2+
+- iOS 13 or later
+- Swift 6.3 or later
+- Xcode 26 or a compatible Swift 6.3 toolchain
 
+Soundable's public playback API is isolated to `@MainActor`. Calls made from UI types normally require no additional work. Calls originating outside the main actor must explicitly switch to it:
 
-## Install
+```swift
+Task { @MainActor in
+    Soundable.play(fileName: "notification.wav")
+}
+```
 
-### Cocoapods
+## Installation
 
-Add this line to your `Podfile`:
+### Swift Package Manager
+
+In Xcode, choose **File > Add Package Dependencies** and enter:
+
+```text
+https://github.com/ThXou/Soundable.git
+```
+
+Select version `2.0.0` or later, then add the `Soundable` product to your app target.
+
+You can also add Soundable to a package manifest:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/ThXou/Soundable.git", from: "2.0.0")
+]
+```
+
+### CocoaPods
 
 ```ruby
-pod 'Soundable', '~> 1.0'
+pod 'Soundable', '~> 2.0'
 ```
 
 ### Carthage
 
-Add this line to your `cartfile`:
-
-```ruby
-github "ThXou/Soundable" ~> 1.0
+```text
+github "ThXou/Soundable" ~> 2.0
 ```
 
-And then follow the official documentation about [Adding frameworks to an application](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application).
+## Playing a sound
 
-## Setup
-
-Import `Soundable` in your source file:
+Create a `Sound` from a file in a bundle or from a URL:
 
 ```swift
 import Soundable
-```
 
-## Playing Sounds
-
-### Single Sounds
-
-`Soundable` provides multiple ways to play a sound. The first one is by creating a `Sound` object:
-
-```swift
 let sound = Sound(fileName: "guitar-chord.wav")
-sound.play()
-```
-
-This will play the `guitar-chord.wav` track located in the main bundle of the application. If you have multiple bundles in your application, use the `fileName:bundle:` function to create the sound. If you have an `URL` object instead, you can use:
-
-```swift
-let sound = Sound(url: url)
-sound.play()
-```
-
-The second one is using the `Soundable` class functions:
-
-```swift
-Soundable.play(fileName: "guitar-chord.wav")
-```
-And the third is for the laziest people. Put the file name in a `String` object and just `tryToPlay`:
-
-```swift
-"guitar-chord.wav".tryToPlay()
-```
-
-This is possible due to a simple `String` category packed with the library that will try to play an audio file located in the application's main bundle with the specified name.
-
-If you have an `URL` object and are lazzy too, you can use it like this also:
-
-```swift
-url.tryToPlay()
-```
-
-All these functions have their respective completion closures that passes an `Error` object if something wrong have happened in the process:
-
-```swift
 sound.play { error in
-    if let error = error {
-        print("error: \(error.localizedDescription)")
+    if let error {
+        print("Playback failed: \(error.localizedDescription)")
     }
 }
 ```
 
-### Multiple Sounds
-
-#### Playing In Parallel
-
-To play audios in parallel your only have to worry on call the `play` function in all the audios you want to play in parallel, all the completion closures will be called when the audio finished playing.
-
-#### Playing In Sequence
-
-`Soundable` supports the playing of audios in sequence, and as for a single sound, you have multitple ways to play audios in sequence. The first one is the best (IMO):
+The static convenience API retains the sound for the duration of playback:
 
 ```swift
-let sound1 = Sound(fileName: "guitar-chord.wav")
-let sound2 = Sound(fileName: "rain.mp3")
-let sound3 = Sound(fileName: "water-stream.wav")
-
-let sounds = [sound1, sound2, sound3]
-sounds.play()
+Soundable.play(fileName: "guitar-chord.wav")
 ```
 
-Or:
+The former `String.tryToPlay` and `URL.tryToPlay` conveniences remain available for source compatibility but are deprecated in Soundable 2.0.
+
+## Playing a queue
+
+Play an array or any other sequence of sounds in order:
 
 ```swift
-[sound1, sound2, sound3].play()
-```
+let intro = Sound(fileName: "intro.wav")
+let message = Sound(fileName: "message.wav")
 
-Can you play and array of `Sound` objects?. Yes. This is thanks to a simple `Sequence` extension packed with the library that only accepts `Sound` objects to play.
-
-The second one is using the `Soundable` class functions, again:
-
-```swift
-Soundable.play(sounds: [sound1, sound2, sound3])
-```
-
-And the third is using the `SoundsQueue` object to create a queue of sounds:
-
-```swift
-let soundsQueue = SoundsQueue(sounds: [sound1, sound2, sound3])
-soundsQueue.play()
-```
-
-As for single sounds, you also have the completion closure after all the sound sequence have been played.
-
-## Stop Sounds
-
-To stop sounds and queues is as simple as play them. If you created the sound using the `Sound` object do it like this:
-
-```swift
-let sound = Sound(fileName: "guitar-chord.wav")
-sound.play()
-...
-sound.stop()
-```
-
-You can stop a specific sound using the `Soundable` class functions:
-
-```swift
-Soundable.stop(sound)
-```
-
-You can stop all the sounds currently playing with `Soundable`, including sound queues:
-
-```swift
-Soundable.stopAll()
-```
-
-Or you can stop all the sounds in a specific group. I explain to you what is that thing of "Groups" in the next section.
-
-> **Stop the sounds or sound queues does not trigger the completion closure.**
-
-
-## Sound Groups
-
-Sound groups is a feature that allows you to group sounds under the same string key, then you can stop all the sounds in that group and keep playing the rest.
-
-By default all the sounds and sound queues are created under the `SoundableKey.DefaultGroupKey` key. In this way, you can group for example, game sounds under the *"game_sounds"* key and then stop only those sounds:
-
-```swift
-Soundable.stopAll(for: "game_sounds")
-```
-
-All the rest of the sounds keep playing until they reach the end of the track or queue.
-
-You can set the group where a sound will belong to in the `groupKey` parameter of every `play` function. For example, when creating a `Sound` object:
-
-```swift
-let sound = Sound(fileName: "sprite-walk.wav")
-sound.play(groupKey: "game_sounds") { error in
-   // Handle error if any
+[intro, message].play { error in
+    if let error {
+        print("Queue failed: \(error.localizedDescription)")
+    }
 }
 ```
 
-## Mute sounds
+An empty queue completes immediately with `SBError.playingFailed(reason: .noSoundsToPlay)`.
 
-If you don't want to completelly stop the sound but only mute all sounds that are playing (Aka put the volume to 0.0), then use the `Soundable` mute functions:
-
-```swift
-// To mute
-Soundable.muteAll()
-Soundable.muteAll(for: "game_sounds")
-
-// To unmute
-Soundable.unmuteAll()
-Soundable.unmuteAll(for: "game_sounds")
-```
-
-Alternativelly you can mute/unmute single sounds and queues:
+## Groups, loops, volume, and muting
 
 ```swift
-sound.mute()
-sound.unmute()
+let ambience = Sound(fileName: "rain.mp3")
+ambience.volume = 0.4
+ambience.play(groupKey: "ambience", loopsCount: -1)
 
-soundsQueue.mute()
-soundsQueue.unmute()
+Soundable.muteAll(for: "ambience")
+Soundable.unmuteAll(for: "ambience")
+Soundable.stopAll(for: "ambience")
 ```
 
-Even check for the muting state with the sound and queue's `isMuted` property.
+`loopsCount` is the number of additional plays. Use `-1` for continuous looping. Muting remembers and restores the previous volume.
 
-If the sound or queue finished while muted, the completion closure is called anyway and the mute state of the sound and queue is restored (Aka volume turns to be zero again).
+Calling `stop()` or a `Soundable.stop…` function intentionally does not invoke the pending completion callback.
 
-## Looped Sounds
-
-Play sounds and sound queues in loop by setting the `loopsCount` parameter in every `play` call, as with the `groupKey`:
-
-```swift
-let sound = Sound(fileName: "sprite-walk.wav")
-sound.play(groupKey: "game_sounds", loopsCount: 2) { error in
-   // Handle error if any
-}
-```
-
-The sound or sound queue will play a total of `loopsCount + 1` times before it triggers the completion closure.
-
-## Disabling Sounds
-
-You can enable/disable all the currently playing sounds and sound queues by setting the `soundEnabled` property of the `Soundable` class:
+## Enabling and disabling playback
 
 ```swift
 Soundable.soundEnabled = false
 ```
 
-If disabled, it will stop all the playing sounds and sound queues and will return an error for subsequent attempts of playing sounds with the library. Disabling the sound system will not fire the completion closures.
+Disabling playback stops all tracked sounds and queues. Later playback attempts complete with `.audioDisabled` until playback is enabled again.
 
-## Setup Audio Session Category
-
-You can setup and activate the shared `AVAudioSession` category with a single call (no error handler). For example to continue playing the sounds when in the app is in background or the device is locked (background modes required):
+## Audio session
 
 ```swift
 import AVFoundation
 
-// Setup the category
 Soundable.activateSession(category: .playback)
-```
-
-Or also deactivate the current active session category:
-
-```swift
+// Later, when appropriate:
 Soundable.deactivateSession()
 ```
 
-## Handling Audio Interruptions
+Audio-session configuration failures are logged and never terminate the host application.
 
-A playing sound or sound queue can be interrupted due to many reasons. For example when you are playing your sounds and then the user receives a phone call, the operating system stops all the sounds playing arround in order to listen the incoming audio from the call. In this case, `Soundable` allows you to catch this kind of events and let you react to an audio interruption:
+## Interruptions
 
 ```swift
-Soundable.observeInterruptions { (type, userInfo) in
-    if type == .began {
-        print("interruption began")
-    } else if type == .ended {
-        print("interruption ended")
+Soundable.observeInterruptions { type, userInfo in
+    switch type {
+    case .began:
+        print("Interruption began")
+    case .ended:
+        print("Interruption ended")
+    @unknown default:
+        break
     }
 }
 ```
 
-In the closure you will receive the type of interruption, whether if it has `.began` or `.ended`, and the `userInfo` object containing the details about the interruption in order to make a more finest handling.
+The observer remains active for subsequent interruption notifications. Registering again replaces the callback without installing another observer.
 
-## Credits
+## Migrating from 1.x
 
-The sounds in the code example has been downloaded from the FreeSound database ([https://freesound.org](https://freesound.org/)).
+Soundable 2.0 raises the minimum deployment target from iOS 9 to iOS 13 and adopts Swift 6 main-actor isolation. Existing API names remain available, but code that calls Soundable from a background or nonisolated context must switch to the main actor. Persisted `soundEnabled` values are migrated automatically from the legacy string representation.
+
+## License
+
+Soundable is available under the MIT license. See [LICENSE](LICENSE).

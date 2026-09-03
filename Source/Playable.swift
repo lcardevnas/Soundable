@@ -24,7 +24,8 @@
 
 import Foundation
 
-public protocol Playable {
+@MainActor
+public protocol Playable: AnyObject {
     
     var url: URL? { get set }
     var identifier: String { get set }

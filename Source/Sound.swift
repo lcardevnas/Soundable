@@ -24,14 +24,18 @@
 
 import AVFoundation
 
-/// The associated key for the completion closure.
-fileprivate var associatedSoundCompletionKey = "kAssociatedSoundCompletionKey"
-
 /// An object to encapsulate sound functionality.
-public class Sound : NSObject, Playable {
+@MainActor
+public final class Sound: NSObject, Playable {
     
     /// The player that will play the sound.
     var player: AVAudioPlayer?
+
+    /// The completion waiting for the current playback attempt.
+    private var completion: SoundCompletion?
+
+    /// The volume restored when the sound is unmuted.
+    private var volumeBeforeMuting: Float = 1.0
     
     /// The name of the sound (file name with extension).
     public var name: String?
@@ -47,29 +51,34 @@ public class Sound : NSObject, Playable {
     
     /// The number of times the sound will be played.
     public var loopsCount: Int {
-        get { return player?.numberOfLoops ?? 0 }
-        set { player?.numberOfLoops = loopsCount }
+        get { player?.numberOfLoops ?? 0 }
+        set { player?.numberOfLoops = newValue }
     }
     
     /// The volume of the sound.
     public var volume: Float {
-        get { return player?.volume ?? 1.0 }
-        set { player?.volume = volume }
+        get { player?.volume ?? 1.0 }
+        set {
+            player?.volume = newValue
+            if newValue > 0 {
+                volumeBeforeMuting = newValue
+            }
+        }
     }
     
     /// Indicates if the sound is currently playing.
     public var isPlaying: Bool {
-        return player?.isPlaying ?? false
+        player?.isPlaying ?? false
     }
     
     /// Indicates if the sound is currently muted.
     public var isMuted: Bool {
-        return player?.volume == 0.0
+        player?.volume == 0.0
     }
     
     
     // MARK: - Initializers
-    override private init() { }
+    private override init() { }
     
     /// Creates a `Sound` object for the given audio file.
     ///
@@ -78,6 +87,8 @@ public class Sound : NSObject, Playable {
     ///                             uses the main bundle.
     public init(fileName: String, bundle: Bundle = Bundle.main) {
         super.init()
+
+        identifier = UUID().uuidString
         
         let urlName = URL(fileURLWithPath: fileName)
         let file = urlName.deletingPathExtension().lastPathComponent
@@ -86,7 +97,6 @@ public class Sound : NSObject, Playable {
         name = fileName
         if let path =  bundle.path(forResource: file, ofType: fileExtension) {
             url = URL(fileURLWithPath: path)
-            identifier = url?.absoluteString ?? ""
         }
         
         preparePlayer()
@@ -100,7 +110,7 @@ public class Sound : NSObject, Playable {
         
         self.url = url
         name = url.lastPathComponent
-        identifier = url.absoluteString
+        identifier = UUID().uuidString
         
         preparePlayer()
     }
@@ -108,22 +118,14 @@ public class Sound : NSObject, Playable {
     
     // MARK: - Private
     private func preparePlayer() {
-        if identifier == "" {
-            print("could not create an identifier for the sound")
-            return
-        }
-        
         do {
             if let url = url {
                 player = try AVAudioPlayer(contentsOf: url)
                 player?.prepareToPlay()
                 player?.delegate = self
                 player?.volume = 1.0
-            } else {
-                print("missing audio url to play")
             }
-        }
-        catch let error {
+        } catch {
             print("error creating player with provided url: \(error)")
         }
     }
@@ -153,14 +155,15 @@ extension Sound {
         
         self.groupKey = groupKey ?? SoundableKey.DefaultGroupKey
         
-        if let completion = completion {
-            objc_setAssociatedObject(self, &associatedSoundCompletionKey, completion, .OBJC_ASSOCIATION_COPY_NONATOMIC)
-        }
+        self.completion = completion
         
         player?.numberOfLoops = loopsCount
-        player?.play()
-        
         Soundable.addPlayableItem(self)
+
+        guard player?.play() == true else {
+            finish(with: SBError.playingFailed(reason: .playbackFailed))
+            return
+        }
     }
     
     /// Pauses the sound.
@@ -170,6 +173,7 @@ extension Sound {
     
     /// Stops the sound.
     public func stop() {
+        completion = nil
         player?.stop()
         unmute()
         
@@ -178,37 +182,40 @@ extension Sound {
     
     /// Mute the sound.
     public func mute() {
+        if let currentVolume = player?.volume, currentVolume > 0 {
+            volumeBeforeMuting = currentVolume
+        }
         player?.volume = 0.0
     }
     
     /// Unmute the sound.
     public func unmute() {
         if player?.volume == 0.0 {
-            player?.volume = 1.0
+            player?.volume = volumeBeforeMuting
         }
+    }
+
+    private func finish(with error: Error?) {
+        let pendingCompletion = completion
+        completion = nil
+        Soundable.removePlayableItem(self)
+        unmute()
+        pendingCompletion?(error)
     }
 }
 
 
-extension Sound : AVAudioPlayerDelegate {
-    public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        let completion = objc_getAssociatedObject(self, &associatedSoundCompletionKey) as? SoundCompletion
-        completion?(nil)
-        
-        objc_setAssociatedObject(self, &associatedSoundCompletionKey, nil, .OBJC_ASSOCIATION_COPY_NONATOMIC)
-        
-        Soundable.removePlayableItem(self)
-        unmute()
+extension Sound: AVAudioPlayerDelegate {
+    nonisolated public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        Task { @MainActor [weak self] in
+            self?.finish(with: flag ? nil : SBError.playingFailed(reason: .playbackFailed))
+        }
     }
     
-    public func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
-        let completion = objc_getAssociatedObject(self, &associatedSoundCompletionKey) as? SoundCompletion
-        completion?(error)
-        
-        objc_setAssociatedObject(self, &associatedSoundCompletionKey, nil, .OBJC_ASSOCIATION_COPY_NONATOMIC)
-        
-        Soundable.removePlayableItem(self)
-        unmute()
+    nonisolated public func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        Task { @MainActor [weak self] in
+            self?.finish(with: SBError.playingFailed(reason: .playbackFailed))
+        }
     }
 }
 
@@ -218,6 +225,8 @@ extension String {
     ///
     /// - parameter completion:     The completion closure called after the sound has finished playing
     ///                                 or an error if any.
+    @available(*, deprecated, message: "Create a Sound or use Soundable.play(fileName:) instead.")
+    @MainActor
     public func tryToPlay(_ completion: SoundCompletion? = nil) {
         let sound = Sound(fileName: self)
         sound.play { error in
@@ -232,6 +241,8 @@ extension URL {
     ///
     /// - parameter completion:     The completion closure called after the sound has finished playing
     ///                                 or an error if any.
+    @available(*, deprecated, message: "Create a Sound and call play() instead.")
+    @MainActor
     public func tryToPlay(_ completion: SoundCompletion? = nil) {
         let sound = Sound(url: self)
         sound.play { error in

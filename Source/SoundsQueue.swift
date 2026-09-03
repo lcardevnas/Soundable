@@ -24,172 +24,191 @@
 
 import AVFoundation
 
-/// The associated key for the completion closure.
-fileprivate var associatedSoundsQueueCompletionKey = "kAssociatedSoundsQueueCompletionKey"
-
-extension Notification.Name {
-    static let QueuePlayerPlayedToEnd = Notification.Name(rawValue: "QueuePlayerPlayedToEnd")
-}
-
-/// An object to encapsulate playing queues functionality.
-public class SoundsQueue : Playable {
-    
-    /// The queue player that will play the queued sounds.
+/// An object that plays multiple sounds in sequence.
+@MainActor
+public final class SoundsQueue: Playable {
+    /// The queue player that plays the queued sounds.
     var queuePlayer: AVQueuePlayer?
 
-    /// The group key where to play the sound queue.
     public var groupKey: String = SoundableKey.DefaultGroupKey
-    
-    /// The identifier for the sounds queue.
-    public var identifier = ""
-    
-    /// The number of times the queue will be played.
+    public var identifier = UUID().uuidString
     public var loopsCount = 0
-    
-    /// Not used in this object.
+
+    /// Retained for source compatibility with `Playable`. Queue playback uses
+    /// the URLs of its component sounds.
     public var url: URL?
-    
-    /// The array of `Sound` objects to be played.
-    private var sounds: [Sound] = []
-    
-    /// Keeps track of the remaining number of sounds to play.
+
+    private let sounds: [Sound]
+    private var observedItems: [AVPlayerItem] = []
     private var pendingNumberOfSoundsToPlay = 0
-    
-    /// Keeps track of the times the sounds queue has been played.
     private var numberOfLoopsPlayed = 0
-    
-    /// The volume of the sound queue items.
+    private var completion: SoundCompletion?
+    private var volumeBeforeMuting: Float = 1.0
+
     public var volume: Float {
-        get { return queuePlayer?.volume ?? 1.0 }
-        set { queuePlayer?.volume = volume }
+        get { queuePlayer?.volume ?? 1.0 }
+        set {
+            queuePlayer?.volume = newValue
+            if newValue > 0 {
+                volumeBeforeMuting = newValue
+            }
+        }
     }
-    
-    /// Indicates if the sound queue is currently muted.
+
     public var isMuted: Bool {
-        return queuePlayer?.volume == 0.0
+        queuePlayer?.volume == 0.0
     }
-    
-    
-    // MARK: - Initializers
-    private init() { }
-    
-    /// Created a `SoundsQueue` object with the given sounds.
-    ///
-    /// - parameter sounds: An array of `Sound` object to play.
+
+    private init() {
+        sounds = []
+    }
+
+    /// Creates a queue containing the valid sounds in `sounds`.
     public init(sounds: [Sound]) {
-        self.sounds = sounds.filter({ $0.player != nil })
-        self.identifier = uniqueString()
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(playerItemDidReachEnd),
-                                               name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(playerItemDidReachEnd),
-                                               name: NSNotification.Name.AVPlayerItemFailedToPlayToEndTime,
-                                               object: nil)
+        self.sounds = sounds.filter { $0.player != nil }
         createPlayer()
     }
-    
-    
-    // MARK: - Actions
-    /// Funcion called after each sound has finished playing.
-    @objc fileprivate func playerItemDidReachEnd() {
-        pendingNumberOfSoundsToPlay -= 1
-        if pendingNumberOfSoundsToPlay <= 0 {
-            if numberOfLoopsPlayed >= loopsCount {
-                numberOfLoopsPlayed = 0
-                unmute()
-                
-                let completion = objc_getAssociatedObject(self, &associatedSoundsQueueCompletionKey) as? SoundCompletion
-                completion?(nil)
-                
-                objc_setAssociatedObject(self, &associatedSoundsQueueCompletionKey, nil, .OBJC_ASSOCIATION_COPY_NONATOMIC)
-            }
-            else {
-                numberOfLoopsPlayed += 1
-                createPlayer()
-                queuePlayer?.play()
-            }
-        }
-    }
-    
-    
-    // MARK: - Private
-    private func setupItems() -> [AVPlayerItem] {
-        var items: [AVPlayerItem] = []
-        for sound in sounds {
-            if let url = sound.url {
-                items.append(AVPlayerItem(url: url))
-            }
-        }
-        return items
-    }
-    
-    private func createPlayer() {
-        let items = setupItems()
-        
-        queuePlayer = AVQueuePlayer(items: items)
-        pendingNumberOfSoundsToPlay = items.count
-    }
-    
-    private func uniqueString() -> String {
-        return String(UInt(bitPattern: ObjectIdentifier(self)))
-    }
-    
-}
 
-
-// MARK: - Playable
-extension SoundsQueue {
-    /// Plays the current sounds queue.
-    ///
-    /// - parameter groupKey:     The group where the sounds queue will be played.
-    /// - parameter loopsCount:   The number of times the sounds queue will be played before calling
-    ///                             the completion closure.
-    /// - parameter completion:   The completion closure called after the sounds queue has
-    ///                             finished playing.
-    public func play(groupKey: String? = nil, loopsCount: Int = 0, completion: SoundCompletion? = nil) {
-        if !Soundable.soundEnabled {
+    public func play(
+        groupKey: String? = nil,
+        loopsCount: Int = 0,
+        completion: SoundCompletion? = nil
+    ) {
+        guard Soundable.soundEnabled else {
             completion?(SBError.playingFailed(reason: .audioDisabled))
             return
         }
-        
+
+        guard !sounds.isEmpty else {
+            completion?(SBError.playingFailed(reason: .noSoundsToPlay))
+            return
+        }
+
         self.groupKey = groupKey ?? SoundableKey.DefaultGroupKey
         self.loopsCount = loopsCount
-        
-        if let completion = completion {
-            objc_setAssociatedObject(self, &associatedSoundsQueueCompletionKey, completion, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+        self.completion = completion
+        numberOfLoopsPlayed = 0
+
+        if pendingNumberOfSoundsToPlay == 0 || queuePlayer?.items().isEmpty != false {
+            createPlayer()
         }
-        
-        queuePlayer?.play()
-        
+
         Soundable.addPlayableItem(self)
+        queuePlayer?.play()
     }
-    
-    /// Pauses the sounds queue.
+
     public func pause() {
         queuePlayer?.pause()
     }
-    
-    /// Stops the sounds queue.
+
     public func stop() {
-        queuePlayer?.removeAllItems()
+        completion = nil
+        resetPlayer()
         unmute()
-        
         Soundable.removePlayableItem(self)
     }
-    
-    /// Mutes the sounds queue.
+
     public func mute() {
+        if let currentVolume = queuePlayer?.volume, currentVolume > 0 {
+            volumeBeforeMuting = currentVolume
+        }
         queuePlayer?.volume = 0.0
     }
-    
-    /// Unmutes the sounds queue.
+
     public func unmute() {
         if queuePlayer?.volume == 0.0 {
-            queuePlayer?.volume = 1.0
+            queuePlayer?.volume = volumeBeforeMuting
         }
+    }
+
+    @objc
+    nonisolated private func playerItemDidReachEnd(_ notification: Notification) {
+        Task { @MainActor [weak self] in
+            self?.handlePlayerItemDidReachEnd()
+        }
+    }
+
+    @objc
+    nonisolated private func playerItemFailedToReachEnd(_ notification: Notification) {
+        Task { @MainActor [weak self] in
+            self?.finish(with: SBError.playingFailed(reason: .playbackFailed))
+        }
+    }
+
+    private func handlePlayerItemDidReachEnd() {
+        guard completion != nil || Soundable.containsPlayableItem(self) else { return }
+
+        pendingNumberOfSoundsToPlay -= 1
+        guard pendingNumberOfSoundsToPlay <= 0 else { return }
+
+        if loopsCount == -1 || numberOfLoopsPlayed < loopsCount {
+            numberOfLoopsPlayed += 1
+            createPlayer()
+            queuePlayer?.play()
+        } else {
+            finish(with: nil)
+        }
+    }
+
+    private func createPlayer() {
+        let wasMuted = isMuted
+        removeItemObservers()
+
+        let items = sounds.compactMap { sound in
+            sound.url.map(AVPlayerItem.init(url:))
+        }
+
+        observedItems = items
+        pendingNumberOfSoundsToPlay = items.count
+        queuePlayer = AVQueuePlayer(items: items)
+        queuePlayer?.volume = wasMuted ? 0.0 : volumeBeforeMuting
+
+        for item in items {
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(playerItemDidReachEnd),
+                name: AVPlayerItem.didPlayToEndTimeNotification,
+                object: item
+            )
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(playerItemFailedToReachEnd),
+                name: AVPlayerItem.failedToPlayToEndTimeNotification,
+                object: item
+            )
+        }
+    }
+
+    private func removeItemObservers() {
+        for item in observedItems {
+            NotificationCenter.default.removeObserver(
+                self,
+                name: AVPlayerItem.didPlayToEndTimeNotification,
+                object: item
+            )
+            NotificationCenter.default.removeObserver(
+                self,
+                name: AVPlayerItem.failedToPlayToEndTimeNotification,
+                object: item
+            )
+        }
+        observedItems.removeAll()
+    }
+
+    private func resetPlayer() {
+        removeItemObservers()
+        queuePlayer?.removeAllItems()
+        queuePlayer = nil
+        pendingNumberOfSoundsToPlay = 0
+        numberOfLoopsPlayed = 0
+    }
+
+    private func finish(with error: Error?) {
+        let pendingCompletion = completion
+        completion = nil
+        resetPlayer()
+        Soundable.removePlayableItem(self)
+        unmute()
+        pendingCompletion?(error)
     }
 }

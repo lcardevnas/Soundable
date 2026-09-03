@@ -24,13 +24,14 @@
 
 import Foundation
 
-public enum SBError: Error {
+public enum SBError: Error, Sendable {
     case playingFailed(reason: PlayingFailureReason)
     
-    public enum PlayingFailureReason {
+    public enum PlayingFailureReason: Sendable {
         case wrongUrl
         case noSoundsToPlay
         case audioDisabled
+        case playbackFailed
     }
 }
 
@@ -54,6 +55,8 @@ extension SBError.PlayingFailureReason {
             return NSLocalizedString("no_sounds_to_play", comment: "The array does not contain any sound to play")
         case .audioDisabled:
             return NSLocalizedString("audio_disabled", comment: "The audio is disabled in Soundable. Set `Soundable.soundEnabled = true`")
+        case .playbackFailed:
+            return NSLocalizedString("playback_failed", comment: "The audio player failed to finish playback")
         }
     }
 }
