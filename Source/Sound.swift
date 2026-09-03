@@ -91,7 +91,7 @@ public final class Sound: NSObject, Playable {
         identifier = UUID().uuidString
         
         let urlName = URL(fileURLWithPath: fileName)
-        let file = urlName.deletingPathExtension().lastPathComponent
+        let file = urlName.deletingPathExtension().path
         let fileExtension = urlName.pathExtension
         
         name = fileName
