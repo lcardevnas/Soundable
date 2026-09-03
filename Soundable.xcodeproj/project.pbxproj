@@ -42,6 +42,7 @@
 		AAD2442221C2A1BB008B1EFE /* VERSION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VERSION; sourceTree = "<group>"; };
 		AAD2442321C2A1BB008B1EFE /* Soundable.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Soundable.podspec; sourceTree = "<group>"; };
 		AAD2442421C2A1BB008B1EFE /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		E9EA51B9304A1A35005952C2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +89,7 @@
 				AAD2442421C2A1BB008B1EFE /* LICENSE */,
 				AAD2442321C2A1BB008B1EFE /* Soundable.podspec */,
 				AAD2442221C2A1BB008B1EFE /* VERSION */,
+				E9EA51B9304A1A35005952C2 /* README.md */,
 			);
 			name = Deployment;
 			sourceTree = "<group>";

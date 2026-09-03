@@ -27,7 +27,7 @@ Task { @MainActor in
 In Xcode, choose **File > Add Package Dependencies** and enter:
 
 ```text
-https://github.com/ThXou/Soundable.git
+https://github.com/lcardevnas/Soundable.git
 ```
 
 Select version `2.0.0` or later, then add the `Soundable` product to your app target.
@@ -36,7 +36,7 @@ You can also add Soundable to a package manifest:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/ThXou/Soundable.git", from: "2.0.0")
+    .package(url: "https://github.com/lcardevnas/Soundable.git", from: "2.0.0")
 ]
 ```
 
@@ -49,7 +49,7 @@ pod 'Soundable', '~> 2.0'
 ### Carthage
 
 ```text
-github "ThXou/Soundable" ~> 2.0
+github "lcardevnas/Soundable" ~> 2.0
 ```
 
 ## Playing a sound
